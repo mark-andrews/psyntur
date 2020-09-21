@@ -1,0 +1,80 @@
+---
+title: "Some helper functions for statistical analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Some helper functions for statistical analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Many widely used and powerful statistical analysis commands --- such as `lm`, `glm`, `lme4::lmer`, etc --- have a simple and consistent calling syntax, often involving a "formula" (e.g., `y ~ x`), which makes them consistent, and easy to remember and apply.
+Some other functions, even simple ones, don't use the formula syntax, or can be a bit awkward to use in some contexts, or require default values of arguments to be explicitly overridden.
+In the `psyntur`, there are some tools that aim to make this functions easier to apply.
+
+These functions and the accompanying data sets can be loaded with the usual `library` command.
+```{r setup}
+library(psyntur)
+```
+
+# Independent samples t-test with `t_test`
+
+R's `stats::t.test` makes it easy to perform independent, paired, or one-sample t-tests.
+For the independent sample t-test, the default is the Welch two sample t-test.
+While arguably a good choice in practice, when t-tests are being taught to illustrate a simple example of normal linear model, the assumption of homogeneity of variance is used.
+To use this with `t.test`, this requires `var.equal = TRUE` to be used.
+The `t_test` function is `psyntur` is used when the standard independent t-test with homogeneity of variance is the desired default test.
+For example, in the following, we use it with the `faithfulfaces` data set. 
+```{r}
+t_test(trustworthy ~ face_sex, data = faithfulfaces)
+```
+
+# Paired samples t-test with `paired_t_test`
+
+For paired t-tests, the `paired_t_test` function can be used.
+In this function, a formula is not used.
+Instead, two variables in the same data frame, which are assumed to be paired in some manner, are used.
+For example, the `pairedsleep` data set (included in `psyntur`) is as follows.
+```{r}
+pairedsleep
+```
+This gives the difference from control in number of hours slept by `r nrow(pairedsleep)` different patients when each took two different drugs.
+These time differences under the two drugs are `y1` and `y2`.
+A paired samples t-test can be performed as follows with this data.
+```{r}
+paired_t_test(y1, y2, data = pairedsleep)
+```
+
+
+# Pairwise t-tests with `pairwise_t_test`
+
+For independent t-tests applied all pairs of a set of variables, to which p-value adjustments are applied, we can use `pairwise_t_test`.
+For example, the following creates a categorical variable with four values, which are the interaction of two binary variables.
+```{r}
+data_df <- dplyr::mutate(vizverb, IV = interaction(task, response))
+```
+Independent samples t-tests with Bonferroni corrections on the `time` variable applied to all pairs of the four levels of the `IV` variable can be done as follows.
+```{r}
+pairwise_t_test(time ~ IV, data = data_df)
+```
+
+# Shipiro-Wilk test with `shapiro_test`
+
+The Shapiro-Wilk test of normality can be applied to a single numeric vector in a data frame as in the following example.
+```{r}
+shapiro_test(time, data = data_df)
+```
+To test the normality of each subset of a variable, such as `time`, corresponding to the values of a categorical variable, we can use a `by` variable as in the following example.
+```{r}
+shapiro_test(time, by = IV, data = data_df)
+```
+
+

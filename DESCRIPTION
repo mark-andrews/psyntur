@@ -1,0 +1,28 @@
+Package: psyntur
+Title: Tools to help teach data analysis using R to NTU Psychology students
+Version: 0.0.1
+Authors@R: 
+    person(given = "Mark",
+           family = "Andrews",
+           role = c("aut", "cre"),
+           email = "mark.andrews@ntu.ac.uk")
+Description: Helper tools for teaching data analysis using R (description to 
+  be continued).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    ggplot2,
+    dplyr,
+    tidyr,
+    magrittr,
+    tibble,
+    formula.tools
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

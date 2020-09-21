@@ -1,0 +1,29 @@
+reference:
+- title: "Visualization"
+  desc: >
+    Functions for data visualization.
+- contents: 
+  - histogram
+  - scatterplot
+  - tukeyboxplot
+- title: "Descriptive statistics"
+  desc: "Functions for doing descriptive statistics."
+- contents:
+  - describe
+  - describe_across
+  - sum_xna
+
+- title: "Statistical analysis"
+  desc: "Functions for statistical analysis."
+- contents:
+  - t_test
+  - paired_t_test
+  - pairwise_t_test
+  - shapiro_test
+- title: "Data sets"
+  desc: "Included data sets."
+- contents:
+  - faithfulfaces
+  - vizverb
+  - schizophrenia
+  - pairedsleep

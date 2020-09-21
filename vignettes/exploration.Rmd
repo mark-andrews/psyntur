@@ -1,0 +1,135 @@
+---
+title: "Simple data exploration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simple data exploration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+The `summarize` function in `dplyr`, especially when combined with `group_by` and `across`, provides powerful tools for exploring data using summary statistics.
+The `psyntur` package provides some wrappers to these tools to allow data exploration, albeit of a limited kind, to be done quickly and easily.
+We explore some of these functions in this vignette.
+
+Load the `psyntur` functions and data sets with the usual `library` command.
+```{r setup}
+library(psyntur)
+```
+
+# Summary statistics with `describe`
+
+We can use the `describe` function in `psyntur`.
+The first argument to `describe` should be the data frame.
+Subsequent arguments should be named arguments of summary statistics functions, like `mean`, `median`, etc., applied to any variables in the data frame.
+For example, using the `faithfulfaces` data frame, we can obtain the arithmetic mean and standard deviation of the `faithful` variable as follows.
+```{r}
+describe(data = faithfulfaces, avg = mean(faithful), stdev = sd(faithful))
+```
+
+We can apply the same or different functions to the same or different variables.
+```{r}
+describe(data = faithfulfaces,
+         avg_faith = mean(faithful), 
+         avg_trust = mean(trustworthy),
+         sd_trust = sd(trustworthy))
+```
+
+We can obtain the summary statistics for the chosen variables for each group of a third variable using a `by` variable.
+```{r}
+describe(data = faithfulfaces, by = face_sex, 
+         avg = mean(faithful), stdev = sd(faithful))
+```
+
+# Multiple summary functions to multiple variables
+
+It would be tedious and repetitive to use `describe` as above if wanted to apply the same set of summary statistic functions to a set of variables.
+Instead, we can use `describe_across`.
+For example, to calculate the mean, median, standard deviation to two variables, `trustworthy` and `faithful`, in the `faithfulfaces` data set, we can do the following.
+```{r}
+describe_across(faithfulfaces,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = mean, median = median, stdev = sd)
+)
+```
+
+Note that the data frame that is returned is in a wide format.
+We can pivot this to a longer format by saying `pivot = TRUE`.
+```{r}
+describe_across(faithfulfaces,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = mean, median = median, stdev = sd),
+                pivot = TRUE
+)
+```
+
+We can use the `by` variable to calculate the summary statistics for each subgroup corresponding to each value of the `by` variable, as in the following example.
+```{r}
+describe_across(faithfulfaces,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = mean, median = median, stdev = sd),
+                by = face_sex,
+                pivot = TRUE
+)
+```
+
+# Dealing with missing values with `_xna`
+
+When variable have `NA` values, most summary statistics function will, by default, return `NA`.
+To illustrate this, we can modify `faithfulfaces` to contain `NA`'s for the `faithful` variable.
+```{r}
+faithfulfaces_na <- faithfulfaces %>%
+  dplyr::mutate(faithful = ifelse(faithful > 6, NA, faithful))
+```
+
+Now, if we try one of the above `describe` or `describe_aross` functions with the `faithful` variable, we will obtain corresponding `NA` values.
+```{r}
+describe_across(faithfulfaces_na,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = mean, median = median, stdev = sd),
+                by = face_sex,
+                pivot = TRUE
+)
+```
+
+Of course, if we set `na.rm = TRUE` in any or all of the summary functions, we will remove the `NA` values before the statistics are calculated.
+This is relatively easy to do with `describe`, as in the following example.
+```{r}
+describe(data = faithfulfaces, by = face_sex, 
+         avg = mean(faithful, na.rm = T), stdev = sd(faithful, na.rm = T))
+```
+However, for `describe` across, we pass in a list of functions, and so to set `na.rm = T`, we can to create `purrr` style anonymous functions calling the summary statistic function with `na.rm = T`, as in the following example.
+```{r}
+library(purrr)
+describe_across(faithfulfaces_na,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = ~mean(., na.rm = T), 
+                                 median = ~median(., na.rm = T), 
+                                 stdev = ~sd(., na.rm = T)),
+                by = face_sex,
+                pivot = TRUE
+)
+```
+Anonymous function like this are not very transparent for those new to R, and the resulting function looks quite complex.
+
+In order to avoid using code like `~mean(., na.rm = T)`, for a number of commonly used summary statistic functions (`sum`, `mean`, `median`, `var`, `sd`, `IQR`), we have made counterparts where `na.rm` is set to `TRUE` by default.
+These functions have the same name as the original with the suffix `_xna` (but `IQR` is `iqr_xna`, not `IQR_xna`).
+As such, we can do the following.
+```{r}
+describe_across(faithfulfaces_na,
+                variables = c(trustworthy, faithful),
+                functions = list(avg = mean_xna, median = median_xna, stdev = sd_xna),
+                by = face_sex,
+                pivot = TRUE
+)
+```
+
+
