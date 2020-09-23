@@ -23,7 +23,7 @@ describe <- function(data, by = NULL, ...){
   if (is.null(enexpr(by))){
     summarise(data, ...)
   } else {
-    summarise(group_by(data, {{ by }}), ...)
+    summarise(group_by(data, across({{ by }})), ..., .groups = 'drop')
   }
   
 }
@@ -71,15 +71,15 @@ describe <- function(data, by = NULL, ...){
 describe_across <- function(data, variables, functions, by = NULL, pivot = FALSE){
   
   if (!is.null(enexpr(by))){
-    data <- group_by(data, {{ by }})
+    data <- group_by(data, across({{ by }}))
   }
   
   if (!pivot){
     results <- data %>% 
-      summarise(across({{ variables }}, functions))
+      summarise(across({{ variables }}, functions), .groups = 'drop')
   } else {
     results <- data %>% 
-      summarise(across({{ variables }}, functions, .names = "{.fn}_____{.col}")) %>%
+      summarise(across({{ variables }}, functions, .names = "{.fn}_____{.col}"), .groups = 'drop') %>%
       tidyr::pivot_longer(cols = contains('_____'),
                           names_to = c('.value', 'variable'),
                           names_sep = '_____')

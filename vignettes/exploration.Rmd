@@ -49,6 +49,19 @@ describe(data = faithfulfaces, by = face_sex,
          avg = mean(faithful), stdev = sd(faithful))
 ```
 
+The `by` argument may be a vector of variables.
+In this case, the chosen variables are grouped by the combination of the `by` variables.
+For example, in the following we group the `time` variable in `vizverb` by both `task` and `response`.
+```{r}
+describe(vizverb, by = c(task, response),
+         avg = mean(time),
+         median = median(time),
+         iqr = IQR(time),
+         stdev = sd(time)
+)
+```
+
+
 # Multiple summary functions to multiple variables
 
 It would be tedious and repetitive to use `describe` as above if wanted to apply the same set of summary statistic functions to a set of variables.
@@ -80,6 +93,8 @@ describe_across(faithfulfaces,
                 pivot = TRUE
 )
 ```
+
+As in the case of `describe`, the `by` argument can be a vector of variables.
 
 # Dealing with missing values with `_xna`
 
