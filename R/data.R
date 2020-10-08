@@ -110,3 +110,25 @@
 #' @source This data is a transformed version of [datasets::sleep].
 #' @keywords datasets
 "pairedsleep"
+
+
+#' Anthropometric data from US Army Personnel
+#' 
+#' Data on the height, weight, handedness from men and women of different ages and different races.
+#' 
+#' @name ansur
+#' @docType data
+#' @format A data frame with 6068 observations from 9 variables.
+#' \describe{ 
+#'    \item{subjectid}{Unique ID of the person}
+#'    \item{gender}{Binary variable indicating the subject's sex: `male` or `female`.}
+#'    \item{height}{Height in centimeters.}
+#'    \item{weight}{Weight in kilograms.}
+#'    \item{handedness}{Categorical variable indicating if the person is left, or right handed, or both.}
+#'    \item{age}{Age in years}
+#'    \item{race}{Race, with categories like `white`, `black`, `hispanic`.}
+#'    \item{height_tercile}{The tercile of the person's height.}
+#'    \item{age_tercile}{The tercile of the person's weight.}
+#' }
+#' @source This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
+"ansur"
