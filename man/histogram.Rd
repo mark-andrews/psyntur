@@ -51,5 +51,7 @@ Optionally, a \code{by} categorical variable can be provided.
 histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
 histogram(x= age, data = schizophrenia, by = gender, position = 'dodge', bins = 20)
-histogram(x = weight, bins = 20, data = ansur, facet = c('height_tercile', 'age_tercile'), facet_type = 'grid')
+histogram(x = weight, bins = 20, data = ansur, facet = height_tercile)
+histogram(x = weight, bins = 20, data = ansur, 
+          facet = c(height_tercile, age_tercile), facet_type = 'grid')
 }

@@ -169,7 +169,9 @@ tukeyboxplot <- function(y, x, data,
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'dodge', bins = 20)
-#' histogram(x = weight, bins = 20, data = ansur, facet = c('height_tercile', 'age_tercile'), facet_type = 'grid')
+#' histogram(x = weight, bins = 20, data = ansur, facet = height_tercile)
+#' histogram(x = weight, bins = 20, data = ansur, 
+#'           facet = c(height_tercile, age_tercile), facet_type = 'grid')
 #' @import ggplot2 dplyr
 #' @export histogram
 histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, facet_type = 'wrap', bins = 10, alpha = 1.0){
@@ -186,10 +188,23 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
                                                          alpha = alpha)
   
   if (!is.null(enexpr(facet))) {
+    
+    # this monstrosity to deal with unquoted, possibly vector, arguments
+    # to facet
+    facet_expr <- enexpr(facet)
+    
+    if(length(facet_expr) == 1) {
+      facet_vars <- as.list(facet_expr)
+    } else {
+      facet_vars <- as.list(facet_expr)[-1]
+    }
+    
+    quoted_facet_vars <- sapply(facet_vars, rlang::quo_name)
+    
     if (facet_type == 'wrap'){
-      p1 <- p1 + facet_wrap(facet, labeller = label_both)
+      p1 <- p1 + facet_wrap(quoted_facet_vars, labeller = label_both)
     } else if (facet_type == 'grid'){
-      p1 <- p1 + facet_grid(facet, labeller = label_both)
+      p1 <- p1 + facet_grid(quoted_facet_vars, labeller = label_both)
     } else {
       stop(sprintf('facet_type should be "wrap" or "grid" not %s', facet_type))
     }
