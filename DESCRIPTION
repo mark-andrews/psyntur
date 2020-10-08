@@ -1,6 +1,6 @@
 Package: psyntur
 Title: Tools to help teach data analysis using R to NTU Psychology students
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Mark",
            family = "Andrews",

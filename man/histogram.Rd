@@ -4,7 +4,16 @@
 \alias{histogram}
 \title{A histogram}
 \usage{
-histogram(x, data, by = NULL, position = "stack", bins = 10, alpha = 1)
+histogram(
+  x,
+  data,
+  by = NULL,
+  position = "stack",
+  facet = NULL,
+  facet_type = "wrap",
+  bins = 10,
+  alpha = 1
+)
 }
 \arguments{
 \item{x}{The numeric variable that is to be histogrammed.}
@@ -16,14 +25,22 @@ variable).}
 provided there will be one histogram for each set of \code{x} values grouped by
 the values of the \code{by} variable.}
 
-\item{position}{If the \code{by} variable is provided, there are three ways these multiple
-histograms can be positioned: stacked (\code{position = 'stack'}), side by side
-(\code{position = 'dodge'}), superimposed (\verb{position = identity'}).}
+\item{position}{If the \code{by} variable is provided, there are three ways these
+multiple histograms can be positioned: stacked (\code{position = 'stack'}), side
+by side (\code{position = 'dodge'}), superimposed (\verb{position = identity'}).}
+
+\item{facet}{A character string or character vector. If provided, we
+\code{facet_wrap} (by default) the histogram by the variables. This is
+equivalent to the \code{facet_wrap(variables)} in \code{ggplot2}.}
+
+\item{facet_type}{By default, this takes the value of \code{wrap}, and \code{facet}
+leads to a facet wrap. If \code{facet_type} is \code{grid}, then \code{facet} gives us a
+\code{facet_grid}.}
 
 \item{bins}{The number of bins to use in the histogram.}
 
-\item{alpha}{The transparency to for the filled histogram bars. This is probably
-only required when using \code{position = 'identity'}.}
+\item{alpha}{The transparency to for the filled histogram bars. This is
+probably only required when using \code{position = 'identity'}.}
 }
 \description{
 This is a wrapper to the typical \code{ggplot} based histogram, i.e., using
@@ -31,7 +48,10 @@ This is a wrapper to the typical \code{ggplot} based histogram, i.e., using
 Optionally, a \code{by} categorical variable can be provided.
 }
 \examples{
-histogram(schizophrenia, x= age, by = gender, bins = 20)
-histogram(schizophrenia, x= age, by = gender, position = 'identity', bins = 20, alpha = 0.7)
-histogram(schizophrenia, x= age, by = gender, position = 'dodge', bins = 20)
+histogram(x= age, data = schizophrenia, by = gender, bins = 20)
+histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
+histogram(x= age, data = schizophrenia, by = gender, position = 'dodge', bins = 20)
+histogram(x = weight, bins = 20, data = ansur, facet = height_tercile)
+histogram(x = weight, bins = 20, data = ansur, 
+          facet = c(height_tercile, age_tercile), facet_type = 'grid')
 }

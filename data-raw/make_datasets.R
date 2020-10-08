@@ -70,3 +70,13 @@ pairedsleep <- sleep %>%
 
 usethis::use_data(pairedsleep, overwrite = TRUE)
 
+
+# Weight data -------------------------------------------------------------
+
+# The original original is here:  https://www.openlab.psu.edu/ansur2/
+
+ansur <- read_csv("http://data.ntupsychology.net/weight.csv") %>%
+  mutate(height_tercile = ntile(height, 3), 
+         age_tercile = ntile(age, 3))
+
+usethis::use_data(ansur, overwrite = TRUE)

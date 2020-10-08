@@ -29,7 +29,7 @@ where \code{k} is the number of functions.
 }
 \description{
 This function is a wrapper to \code{dplyr}'s \code{summarize} used with the
-\code{across}function. For each variable in a set of variables, calculate each
+\code{across} function. For each variable in a set of variables, calculate each
 summary statistic from a list of summary statistic functions. Optionally,
 group the variables by a grouping variable, and then calculate the
 statistics. Optionally, the tibble that is returned by default, which is in a

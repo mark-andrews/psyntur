@@ -153,19 +153,28 @@ tukeyboxplot <- function(y, x, data,
 #' @param by A categorical variable by which to group the `x` values. If
 #'   provided there will be one histogram for each set of `x` values grouped by
 #'   the values of the `by` variable.
-#' @param position If the `by` variable is provided, there are three ways these multiple
-#'   histograms can be positioned: stacked (`position = 'stack'`), side by side
-#'   (`position = 'dodge'`), superimposed (`position = identity'`).
+#' @param position If the `by` variable is provided, there are three ways these
+#'   multiple histograms can be positioned: stacked (`position = 'stack'`), side
+#'   by side (`position = 'dodge'`), superimposed (`position = identity'`).
+#' @param facet A character string or character vector. If provided, we
+#'   `facet_wrap` (by default) the histogram by the variables. This is
+#'   equivalent to the `facet_wrap(variables)` in `ggplot2`.
+#' @param facet_type By default, this takes the value of `wrap`, and `facet`
+#'   leads to a facet wrap. If `facet_type` is `grid`, then `facet` gives us a
+#'   `facet_grid`.
 #' @param bins The number of bins to use in the histogram.
-#' @param alpha The transparency to for the filled histogram bars. This is probably
-#'    only required when using `position = 'identity'`.
+#' @param alpha The transparency to for the filled histogram bars. This is
+#'   probably only required when using `position = 'identity'`.
 #' @examples
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'dodge', bins = 20)
-#' @import ggplot2
+#' histogram(x = weight, bins = 20, data = ansur, facet = height_tercile)
+#' histogram(x = weight, bins = 20, data = ansur, 
+#'           facet = c(height_tercile, age_tercile), facet_type = 'grid')
+#' @import ggplot2 dplyr
 #' @export histogram
-histogram <- function(x, data, by = NULL, position = 'stack', bins = 10, alpha = 1.0){
+histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, facet_type = 'wrap', bins = 10, alpha = 1.0){
   
   if (is.null(enexpr(by))) {
     the_aes <- aes(x = {{ x }})
@@ -177,6 +186,35 @@ histogram <- function(x, data, by = NULL, position = 'stack', bins = 10, alpha =
                                                          colour = 'white',
                                                          position = position,
                                                          alpha = alpha)
+  
+  if (!is.null(enexpr(facet))) {
+    
+    # this monstrosity to deal with unquoted, possibly vector, arguments
+    # to facet
+    facet_expr <- enexpr(facet)
+    
+    if(length(facet_expr) == 1) {
+      facet_vars <- as.list(facet_expr)
+    } else {
+      facet_vars <- as.list(facet_expr)[-1]
+    }
+    
+    quoted_facet_vars <- sapply(facet_vars, rlang::quo_name)
+    
+    if (facet_type == 'wrap'){
+      p1 <- p1 + facet_wrap(quoted_facet_vars, labeller = label_both)
+    } else if (facet_type == 'grid'){
+      p1 <- p1 + facet_grid(quoted_facet_vars, labeller = label_both)
+    } else {
+      stop(sprintf('facet_type should be "wrap" or "grid" not %s', facet_type))
+    }
+  }
 
-  p1 + theme_classic() + scale_fill_brewer(palette = "Set1")
+  # minimal looks better than classic in a faceted plot
+  if (is.null(enexpr(facet))) {
+    p1 + theme_classic() + scale_fill_brewer(palette = "Set1")
+  } else {
+    p1 + theme_minimal() + scale_fill_brewer(palette = "Set1")
+  }
+ 
 }
