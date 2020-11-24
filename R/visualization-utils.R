@@ -218,3 +218,55 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
   }
  
 }
+
+#' A pairs plot
+#'
+#' This is a wrapper to the `GGally` based pairs plot of a list of variables 
+#' displayed as scatterplots for pairs of continuous variables, density functions in 
+#' the diagonal, and boxplots for pairs of continuous and categorical variables.
+#' Optionally, a `by` categorical variable can be provided.
+#'
+#' @param variables A vector of variable names
+#' @param data The data frame.
+#' @param by An optional variable, usually categorical (factor or character), by
+#'   which the data are grouped and coloured.
+#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
+#' @examples
+#' # A simple pairs plot
+#' pairs_plot(variables = c("sex_dimorph", "attractive"),
+#' data = faithfulfaces)
+#' # A pairs plot with grouping variable
+#' pairs_plot(variables = c("sex_dimorph", "attractive"),
+#' by = face_sex,
+#' data = faithfulfaces)
+#' @import ggplot2 ggthemes GGally
+#' @export
+
+pairs_plot <- function(variables, data, by = NULL){
+  
+  the_aes <- aes(alpha = .25)
+  
+  # If we have a `by`, set that as the "colour" aesthetic
+  if (!is.null(enexpr(by))) {
+    the_aes$colour <- enexpr(by)
+    the_aes$fill <- enexpr(by)
+  }
+  
+  ggpairs(data, columns = which(variables %in% names(data)), 
+          the_aes, 
+          title = "",  
+          axisLabels = "show", 
+          columnLabels = variables,
+          upper = list(continuous = "points"),
+          lower = "blank",
+          diag = list(continuous = "densityDiag")) +
+    theme_few() + 
+    scale_colour_brewer(palette = "Set1") +
+    scale_fill_brewer(palette = "Set1") +
+    theme(axis.ticks = element_blank(),
+          legend.position = "top",
+          legend.justification = "right",
+          strip.text = element_text(hjust = 0))
+  
+}
