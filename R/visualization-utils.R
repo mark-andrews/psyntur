@@ -226,7 +226,7 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
 #' the diagonal, and boxplots for pairs of continuous and categorical variables.
 #' Optionally, a `by` categorical variable can be provided.
 #'
-#' @param variables A vector of variable names
+#' @param variables A vector of variable names.
 #' @param data The data frame.
 #' @param by An optional variable, usually categorical (factor or character), by
 #'   which the data are grouped and coloured.
@@ -269,4 +269,94 @@ pairs_plot <- function(variables, data, by = NULL){
           legend.justification = "right",
           strip.text = element_text(hjust = 0))
   
+}
+
+
+#' An interaction line plot
+#'
+#' This is a wrapper to an `emmeans` based lineplot to visualise two-way interactions
+#' based on a linear model that is parsed to the plotting function. 
+#' The `x` argument and the `by` argument need to be factors used in the linear model.
+#'
+#' @param model The name of a linear-model fit.
+#' @param x One variable name used as predictor in the linear model.
+#' @param by Another (optional) variable used in the model fit, usually categorical 
+#' (factor or character), by which the data are grouped and coloured.
+#' @param errorbars Either "SE" or "CI"; whether the errorbars should display standard 
+#' errors (SE; default) or 95% confidence intervals (CI).
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
+#' 
+#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
+#' @examples
+#' # A simple interaction plot
+#' m <- lm(score ~ time, data = selfesteem2)
+#' interaction_line_plot(model = m, x = time)
+#' # An interaction plot with grouping variable
+#' m <- lm(score ~ time * treatment, data = selfesteem2)
+#' interaction_line_plot(model = m, x = time, by = treatment)
+#' # with 95% confidence intervals
+#' interaction_line_plot(model = m, x = time, by = treatment, errorbars = "CI")
+#' @import tidyverse emmeans
+#' @export
+
+interaction_line_plot <- function(model, x, 
+                                  by = NULL, 
+                                  errorbars = "SE", 
+                                  ylim = NULL, 
+                                  ylab = NULL, 
+                                  xlab = NULL){
+  
+  pos.dodge <- position_dodge(.25)
+  
+  if (is.null(enexpr(by))) {
+    specs <- deparse(substitute(x))
+    model_summary <- emmeans(object = model, specs = specs) %>% as_tibble()
+    the_aes <- aes(x = {{ x }}, y = emmean)
+  }
+  
+  if (!is.null(enexpr(by))) {
+    specs <- c( deparse(substitute(x)), deparse(substitute(by)))
+    model_summary <- emmeans(object = model, specs = specs) %>% as_tibble()
+    the_aes <- aes(x = {{ x }}, y = emmean, group = {{ by }}, colour = {{ by }})
+  }
+  
+  p1 <- ggplot(model_summary, mapping = the_aes) + 
+    geom_point(position = pos.dodge) + 
+    geom_line(position = pos.dodge)
+  
+  if (errorbars == "SE"){  
+    p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
+                                  ymin = emmean - SE, 
+                                  ymax = emmean + SE), 
+                              show.legend = F,
+                              size = .3, position = pos.dodge)
+    if (!is.null(ylab)){
+      p1 <- p1 + labs(y = paste0(ylab, " (with SEs)"))
+    }
+  }
+  if (errorbars == "CI"){  
+    p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
+                                  ymin = lower.CL, 
+                                  ymax = upper.CL), 
+                              show.legend = F,
+                              size = .3, position = pos.dodge)
+    if (!is.null(ylab)){
+      p1 <- p1 + labs(y = paste0(ylab, " (with 95% CIs)"))
+    }
+  }
+  
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  p1 + theme_classic() + scale_colour_brewer(palette = "Set1") +
+    theme(legend.position = "top",
+          legend.justification = "right")
 }
