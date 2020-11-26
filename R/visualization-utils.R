@@ -17,6 +17,11 @@
 #'   coloured.
 #' @param best_fit_line A logical variable indicating if the line of best fit
 #'   should shown or not.
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param xlim The lower and upper bound of the x-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
+
 #' @examples 
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces)
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces,
@@ -25,7 +30,11 @@
 #'             by = face_sex, best_fit_line = TRUE)
 #' @import ggplot2
 #' @export
-scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
+scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE,
+                        ylim = NULL,
+                        xlim = NULL,
+                        ylab = NULL, 
+                        xlab = NULL){
   
   if (is.null(enexpr(by))) {
     the_aes <- aes(x = {{ x }}, y = {{ y }})
@@ -36,6 +45,22 @@ scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
   
   if (best_fit_line){
     p1 <- p1 + stat_smooth(method = 'lm', se = FALSE, fullrange = TRUE, formula = 'y ~ x')
+  }
+  
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+
+  if (!is.null(xlim)){
+    p1 <- p1 + scale_x_continuous(limits = xlim)
+  }
+    
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
   }
   
   p1 + theme_classic() + scale_colour_brewer(palette = "Set1")#ggthemes::scale_colour_colorblind()
@@ -69,6 +94,9 @@ scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
 #' @param jitter_width The width of the jitter relative to box width. For
 #'   example, set `jitter_width = 1` if you want the jitter to be as wide the
 #'   box.
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
 #' @return A `ggplot` object, which may be modified with further `ggplot2`
 #'   commands.
 #' @examples
@@ -88,7 +116,10 @@ tukeyboxplot <- function(y, x, data,
                          by = NULL,
                          jitter = FALSE, 
                          box_width = 1/3,
-                         jitter_width = 1/5){
+                         jitter_width = 1/5,
+                         ylim = NULL,
+                         ylab = NULL,
+                         xlab = NULL){
   
   # If `x` is missing, and so we have one boxplot, use an empty `x` variable
   # with x = ''.
@@ -138,6 +169,18 @@ tukeyboxplot <- function(y, x, data,
   # If `x` is missing, we don't want any ticks or labels on 'x' axis.
   if (missing(x)) p1 <- p1 + xlab(NULL) + theme(axis.ticks = element_blank()) 
   
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
+  }
+  
   p1 + theme_classic() + scale_colour_brewer(palette = "Set1")
 }
 
@@ -165,6 +208,9 @@ tukeyboxplot <- function(y, x, data,
 #' @param bins The number of bins to use in the histogram.
 #' @param alpha The transparency to for the filled histogram bars. This is
 #'   probably only required when using `position = 'identity'`.
+#' @param xlim The lower and upper bound of the x-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
 #' @examples
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
@@ -216,6 +262,18 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
   } else {
     p1 + theme_minimal() + scale_fill_brewer(palette = "Set1")
   }
+  
+  if (!is.null(xlim)){
+    p1 <- p1 + scale_x_continuous(limits = xlim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
+  }
  
 }
 
@@ -245,7 +303,7 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
 
 pairs_plot <- function(variables, data, by = NULL){
   
-  the_aes <- aes(alpha = .25)
+  the_aes <- ggplot2::aes(alpha = .25)
   
   # If we have a `by`, set that as the "colour" aesthetic
   if (!is.null(enexpr(by))) {
@@ -325,7 +383,7 @@ interaction_line_plot <- function(model, x,
   
   p1 <- ggplot(model_summary, mapping = the_aes) + 
     geom_point(position = pos.dodge) + 
-    geom_line(position = pos.dodge)
+    geom_line(position = pos.dodge) 
   
   if (errorbars == "SE"){  
     p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
