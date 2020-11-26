@@ -240,3 +240,82 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
   
   stats::pairwise.t.test(y, x, p.adjust.method = p_adj)
 }
+
+#' Extended LM summary
+#'
+#' This is wrapper to the `summary` function. This function assumes lm fits
+#' as input and adds confidence intervals using `confint`, the log-Likelihood `logLik`,
+#' the deviance `deviance`, and (by default) the variance inflation factor `car::vif` and 
+#' standardised coefficients (see [lm.beta::lm.beta()]).
+#'
+#' @param model An lm model fit.
+#' @param ci Confidence interval (default 0.95). 
+#' @param vif Append variance inflation factor to coefficents (default TRUE). 
+#' @param std_coef Display standardised coefficients (default TRUE).
+#' @return A named list.
+#' 
+#' @examples 
+#' # Model summary with 95% CIs, variance inflation factor and standardised coefficients.
+#' model <- lm(faithful ~ trustworthy + attractive + sex_dimorph, data = faithfulfaces)
+#' summary_lm(model)
+#' # without standardised coefficients
+#' summary_lm(model, std_coef = FALSE)
+#' # 89% CIs instead of 95% CIs
+#' summary_lm(model, ci = .89)
+#' 
+#' @import tidyverse car lm.beta
+#' @export
+
+summary_lm <- function(model, ci = 0.95, vif = TRUE, std_coef = TRUE){
+  
+  # Standard model summary
+  summary <- summary(model)
+  coefs <- summary$coef %>% as.data.frame() %>%
+    rownames_to_column("Predictors")
+  
+  # CIs
+  cis <- confint(model, level = ci) %>% as.data.frame() %>%
+    rownames_to_column("Predictors") %>%
+    rename(Lower = `2.5 %`,
+           Upper = `97.5 %`)
+  
+  # Combine summary and CIs
+  results <- left_join(coefs, cis, by = "Predictors") %>%
+    select(Predictors, Estimate, Lower, Upper, everything()) %>%
+    rename(`p value` = `Pr(>|t|)`)
+  
+  # Add standardised coefs
+  if(std_coef){
+    results <- coef(lm.beta::lm.beta(model)) %>% as.data.frame() %>%
+      rownames_to_column("Predictors") %>%
+      rename(`Std. Estimate` = ".") %>%
+      left_join(results, by = "Predictors") 
+  }
+  
+  # Add variance inflation factor
+  if(vif){
+    vifs <- c(NA, car::vif(model)) %>% as_tibble() %>%
+      rename(vif = value)
+    results <- bind_cols(results, vifs)
+  }  
+  
+  # Anova summary
+  fstat <- summary$fstatistic %>% as_tibble() %>% pull(value)
+  p_value <- pf(q = fstat[1], df1 = fstat[2], df2 = fstat[3], lower.tail = FALSE)
+  
+  # Combine all results into a list
+  final_summary <- list(
+    `ANOVA` = paste0("F(", fstat[2], ", ", fstat[3], ") = ", round(fstat[1],2),", p = ", signif(p_value,3)),
+    `R-squared` = signif(summary$r.squared,2),
+    `Adjusted R-squared` = signif(summary$adj.r.squared,2),
+    `Log-Likelihood` = signif(logLik(model)[1],2),
+    `AIC` = signif(AIC(model),2),
+    `Deviance` = signif(deviance(model),2),
+    `Coefficients table` = results %>% 
+      mutate_if(is.numeric, signif, 2),
+    `Confidence interval` = paste0(ci*100, "%")
+  )
+  
+  return(final_summary)
+  
+}

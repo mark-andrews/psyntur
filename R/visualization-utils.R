@@ -211,6 +211,7 @@ tukeyboxplot <- function(y, x, data,
 #' @param xlim The lower and upper bound of the x-axis (optional).
 #' @param ylab The y-axis label (optional).
 #' @param xlab The x-axis label (optional).
+#' 
 #' @examples
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
@@ -290,6 +291,7 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
 #'   which the data are grouped and coloured.
 #' @return A `ggplot` object, which may be modified with further `ggplot2`
 #'   commands.
+#'   
 #' @examples
 #' # A simple pairs plot
 #' pairs_plot(variables = c("sex_dimorph", "attractive"),
@@ -311,7 +313,8 @@ pairs_plot <- function(variables, data, by = NULL){
     the_aes$fill <- enexpr(by)
   }
   
-  ggpairs(data, columns = which(variables %in% names(data)), 
+  GGally::ggpairs(data, 
+                  columns = which(variables %in% names(data)), 
           the_aes, 
           title = "",  
           axisLabels = "show", 
@@ -319,7 +322,7 @@ pairs_plot <- function(variables, data, by = NULL){
           upper = list(continuous = "points"),
           lower = "blank",
           diag = list(continuous = "densityDiag")) +
-    theme_few() + 
+    ggthemes::theme_few() + 
     scale_colour_brewer(palette = "Set1") +
     scale_fill_brewer(palette = "Set1") +
     theme(axis.ticks = element_blank(),
@@ -340,7 +343,7 @@ pairs_plot <- function(variables, data, by = NULL){
 #' @param x One variable name used as predictor in the linear model.
 #' @param by Another (optional) variable used in the model fit, usually categorical 
 #' (factor or character), by which the data are grouped and coloured.
-#' @param errorbars Either "SE" or "CI"; whether the errorbars should display standard 
+#' @param errorbars Either "se" or "ci"; whether the errorbars should display standard 
 #' errors (SE; default) or 95% confidence intervals (CI).
 #' @param ylim The lower and upper bound of the y-axis (optional).
 #' @param ylab The y-axis label (optional).
@@ -362,7 +365,7 @@ pairs_plot <- function(variables, data, by = NULL){
 
 interaction_line_plot <- function(model, x, 
                                   by = NULL, 
-                                  errorbars = "SE", 
+                                  errorbars = "se", 
                                   ylim = NULL, 
                                   ylab = NULL, 
                                   xlab = NULL){
@@ -376,7 +379,7 @@ interaction_line_plot <- function(model, x,
   }
   
   if (!is.null(enexpr(by))) {
-    specs <- c( deparse(substitute(x)), deparse(substitute(by)))
+    specs <- c(deparse(substitute(x)), deparse(substitute(by)))
     model_summary <- emmeans(object = model, specs = specs) %>% as_tibble()
     the_aes <- aes(x = {{ x }}, y = emmean, group = {{ by }}, colour = {{ by }})
   }
@@ -385,7 +388,7 @@ interaction_line_plot <- function(model, x,
     geom_point(position = pos.dodge) + 
     geom_line(position = pos.dodge) 
   
-  if (errorbars == "SE"){  
+  if (errorbars == "se"){  
     p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
                                   ymin = emmean - SE, 
                                   ymax = emmean + SE), 
@@ -395,7 +398,7 @@ interaction_line_plot <- function(model, x,
       p1 <- p1 + labs(y = paste0(ylab, " (with SEs)"))
     }
   }
-  if (errorbars == "CI"){  
+  if (errorbars == "ci"){  
     p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
                                   ymin = lower.CL, 
                                   ymax = upper.CL), 
