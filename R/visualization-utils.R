@@ -17,6 +17,10 @@
 #'   coloured.
 #' @param best_fit_line A logical variable indicating if the line of best fit
 #'   should shown or not.
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param xlim The lower and upper bound of the x-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
 #' @examples 
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces)
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces,
@@ -25,7 +29,11 @@
 #'             by = face_sex, best_fit_line = TRUE)
 #' @import ggplot2
 #' @export
-scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
+scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE,
+                        ylim = NULL,
+                        xlim = NULL,
+                        ylab = NULL, 
+                        xlab = NULL){
   
   if (is.null(enexpr(by))) {
     the_aes <- aes(x = {{ x }}, y = {{ y }})
@@ -37,6 +45,22 @@ scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
   if (best_fit_line){
     p1 <- p1 + stat_smooth(method = 'lm', se = FALSE, fullrange = TRUE, formula = 'y ~ x')
   }
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+  
+  if (!is.null(xlim)){
+    p1 <- p1 + scale_x_continuous(limits = xlim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
+  }
+  
   
   p1 + theme_classic() + scale_colour_brewer(palette = "Set1")#ggthemes::scale_colour_colorblind()
 }
@@ -69,6 +93,9 @@ scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE){
 #' @param jitter_width The width of the jitter relative to box width. For
 #'   example, set `jitter_width = 1` if you want the jitter to be as wide the
 #'   box.
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
 #' @return A `ggplot` object, which may be modified with further `ggplot2`
 #'   commands.
 #' @examples
@@ -88,7 +115,10 @@ tukeyboxplot <- function(y, x, data,
                          by = NULL,
                          jitter = FALSE, 
                          box_width = 1/3,
-                         jitter_width = 1/5){
+                         jitter_width = 1/5,
+                         ylim = NULL,
+                         ylab = NULL,
+                         xlab = NULL){
   
   # If `x` is missing, and so we have one boxplot, use an empty `x` variable
   # with x = ''.
@@ -138,6 +168,18 @@ tukeyboxplot <- function(y, x, data,
   # If `x` is missing, we don't want any ticks or labels on 'x' axis.
   if (missing(x)) p1 <- p1 + xlab(NULL) + theme(axis.ticks = element_blank()) 
   
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
+  }
+  
   p1 + theme_classic() + scale_colour_brewer(palette = "Set1")
 }
 
@@ -165,6 +207,12 @@ tukeyboxplot <- function(y, x, data,
 #' @param bins The number of bins to use in the histogram.
 #' @param alpha The transparency to for the filled histogram bars. This is
 #'   probably only required when using `position = 'identity'`.
+#' @param xlim The lower and upper bound of the x-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
+#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
+#'   
 #' @examples
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
@@ -174,7 +222,11 @@ tukeyboxplot <- function(y, x, data,
 #'           facet = c(height_tercile, age_tercile), facet_type = 'grid')
 #' @import ggplot2 dplyr
 #' @export histogram
-histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, facet_type = 'wrap', bins = 10, alpha = 1.0){
+histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, 
+                      facet_type = 'wrap', bins = 10, alpha = 1.0,
+                      xlim = NULL,
+                      ylab = NULL,
+                      xlab = NULL){
   
   if (is.null(enexpr(by))) {
     the_aes <- aes(x = {{ x }})
@@ -209,6 +261,18 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
       stop(sprintf('facet_type should be "wrap" or "grid" not %s', facet_type))
     }
   }
+  
+  if (!is.null(xlim)){
+    p1 <- p1 + scale_x_continuous(limits = xlim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  if (!is.null(ylab)){
+    p1 <- p1 + labs(y = ylab)
+  }
 
   # minimal looks better than classic in a faceted plot
   if (is.null(enexpr(facet))) {
@@ -216,5 +280,221 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
   } else {
     p1 + theme_minimal() + scale_fill_brewer(palette = "Set1")
   }
- 
+}
+
+#' A pairs plot
+#'
+#' This is a wrapper to the `GGally` based pairs plot of a list of variables 
+#' displayed as scatterplots for pairs of continuous variables, density functions in 
+#' the diagonal, and boxplots for pairs of continuous and categorical variables.
+#' Optionally, a `by` categorical variable can be provided.
+#'
+#' @param variables A vector of variable names.
+#' @param data The data frame.
+#' @param by An optional variable, usually categorical (factor or character), by
+#'   which the data are grouped and coloured.
+#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
+#'   
+#' @examples
+#' # A simple pairs plot
+#' pairs_plot(variables = c("sex_dimorph", "attractive"),
+#' data = faithfulfaces)
+#' # A pairs plot with grouping variable
+#' pairs_plot(variables = c("sex_dimorph", "attractive"),
+#' by = face_sex,
+#' data = faithfulfaces)
+#' @import ggplot2 ggthemes GGally
+#' @export
+
+pairs_plot <- function(variables, data, by = NULL){
+  
+  the_aes <- ggplot2::aes(alpha = .25)
+  
+  # If we have a `by`, set that as the "colour" aesthetic
+  if (!is.null(enexpr(by))) {
+    the_aes$colour <- enexpr(by)
+    the_aes$fill <- enexpr(by)
+  }
+  
+  GGally::ggpairs(data, 
+                  columns = which(variables %in% names(data)), 
+                  the_aes, 
+                  title = "",  
+                  axisLabels = "show", 
+                  columnLabels = variables,
+                  upper = list(continuous = "points"),
+                  lower = "blank",
+                  diag = list(continuous = "densityDiag")) +
+    ggthemes::theme_few() + 
+    scale_colour_brewer(palette = "Set1") +
+    scale_fill_brewer(palette = "Set1") +
+    theme(axis.ticks = element_blank(),
+          legend.position = "top",
+          legend.justification = "right",
+          strip.text = element_text(hjust = 0))
+  
+}
+
+
+#' An interaction line plot
+#'
+#' This is a wrapper to the `emmeans` based lineplot to visualise two-way interactions
+#' based on a linear model that is parsed to the plotting function. 
+#' The `x` argument and the `by` argument need to be factors used in the linear model.
+#'
+#' @param model The name of a linear-model fit using `lm`.
+#' @param x One variable name used as predictor in the linear model.
+#' @param by Another (optional) variable used in the model fit, usually categorical 
+#' (factor or character), by which the data are grouped and coloured.
+#' @param errorbars Either "se" or "ci"; whether the errorbars should display standard 
+#' errors (SE; default) or 95% confidence intervals (CI).
+#' @param ylim The lower and upper bound of the y-axis (optional).
+#' @param ylab The y-axis label (optional).
+#' @param xlab The x-axis label (optional).
+#' 
+#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
+#' @examples
+#' # A simple interaction plot
+#' m <- lm(score ~ time, data = selfesteem2)
+#' interaction_line_plot(model = m, x = time)
+#' # An interaction plot with grouping variable
+#' m <- lm(score ~ time * treatment, data = selfesteem2)
+#' interaction_line_plot(model = m, x = time, by = treatment)
+#' # with 95% confidence intervals
+#' interaction_line_plot(model = m, x = time, by = treatment, errorbars = "CI")
+#' @import tidyverse emmeans
+#' @export
+
+interaction_line_plot <- function(model, x, 
+                                  by = NULL, 
+                                  errorbars = "se", 
+                                  ylim = NULL, 
+                                  ylab = NULL, 
+                                  xlab = NULL){
+  
+  pos.dodge <- position_dodge(.25)
+  
+  if (is.null(enexpr(by))) {
+    specs <- deparse(substitute(x))
+    model_summary <- emmeans(object = model, specs = specs) %>% as_tibble()
+    the_aes <- aes(x = {{ x }}, y = emmean)
+  }
+  
+  if (!is.null(enexpr(by))) {
+    specs <- c(deparse(substitute(x)), deparse(substitute(by)))
+    model_summary <- emmeans(object = model, specs = specs) %>% as_tibble()
+    the_aes <- aes(x = {{ x }}, y = emmean, group = {{ by }}, colour = {{ by }})
+  }
+  
+  p1 <- ggplot(model_summary, mapping = the_aes) + 
+    geom_point(position = pos.dodge) + 
+    geom_line(position = pos.dodge) 
+  
+  if (errorbars == "se"){  
+    p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
+                                  ymin = emmean - SE, 
+                                  ymax = emmean + SE), 
+                              show.legend = F,
+                              size = .3, position = pos.dodge)
+    if (!is.null(ylab)){
+      p1 <- p1 + labs(y = paste0(ylab, " (with SEs)"))
+    }
+  }
+  if (errorbars == "ci"){  
+    p1 <- p1 + geom_linerange(aes(x = {{ x }}, 
+                                  ymin = lower.CL, 
+                                  ymax = upper.CL), 
+                              show.legend = F,
+                              size = .3, position = pos.dodge)
+    if (!is.null(ylab)){
+      p1 <- p1 + labs(y = paste0(ylab, " (with 95% CIs)"))
+    }
+  }
+  
+  if (!is.null(ylim)){
+    p1 <- p1 + scale_y_continuous(limits = ylim)
+  }
+  
+  if (!is.null(xlab)){
+    p1 <- p1 + labs(x = xlab)
+  }
+  
+  p1 + theme_classic() + scale_colour_brewer(palette = "Set1") +
+    theme(legend.position = "top",
+          legend.justification = "right")
+}
+
+
+#' Linear model diagnostics plot
+#'
+#' This is a wrapper function generating four diagnostics plots to evaluate
+#' linear-model fit including the distribution of residuals, a scatterplot of the
+#' fitted values plotted against the residuals, a normal Q-Q plot and a scale-location
+#' plot.
+#' 
+#' @param model The name of a linear-model fit using `lm`.
+#' 
+#' @examples
+#' # A simple interaction plot
+#' m <- lm(faithful ~ sex_dimorph + attractive + face_sex, data = faithfulfaces)
+#' lm_diagnostics(m)
+#' @import tidyverse cowplot ggthemes
+#' @export
+
+lm_diagnostics <- function(model){
+  
+  # Set theme
+  theme_set(ggthemes::theme_few())
+  
+  # Prep data for plotting
+  data <- tibble(fitted = fitted(model), 
+                 resid = residuals(model)) %>%
+    mutate(std_resid = scale(resid)[,1]) %>%
+    rownames_to_column("id") %>%
+    mutate(id = ifelse(abs(resid) > 1.5, id, "")) %>%
+    arrange(std_resid) %>%
+    mutate(std_resid_id = 1:n(),
+           sqrt_std_resid = sqrt(abs(std_resid)))
+  
+  # Histogram of residuals  
+  resid_hist <- ggplot(data, aes(x = resid)) +
+    geom_histogram(alpha = .75) +
+    labs(x = "Residuals", 
+         y = "Frequency",
+         title = "Distribution of residuals") 
+  
+  # Scatterplot of fitted values against residuals
+  scat_resid_fitted <- ggplot(data, aes(x = fitted, y = resid, label = id)) +
+    geom_point(alpha = .65, shape = 21) +
+    labs(y = "Residuals", x = "Fitted values", 
+         title = "Residuals vs Fitted values") +
+    geom_hline(yintercept = 0, linetype = "dashed", colour = "grey30") +
+    geom_smooth(se = F, size = .5, colour = "red") +
+    geom_text(position = position_jitter(.3))
+  
+  # Normal Q-Q plot
+  qq_plot <- ggplot(data, aes(sample = std_resid)) +
+    stat_qq(shape = 21) + stat_qq_line(linetype = "dashed", colour = "grey30") +
+    geom_text(label=data$id, stat="qq", nudge_y=.25) +
+    labs(y = "Standardised residuals", 
+         x = "Theoretical quantiles",
+         title = "Normal Q-Q")
+  
+  # Scale-Location plot
+  scale_location_plot <- ggplot(data, aes(x = fitted, 
+                                          y = sqrt_std_resid, label = id)) +
+    geom_point(alpha = .65, shape = 21) +
+    labs(y = expression(sqrt(abs("Standardised residuals"))), x = "Fitted values", 
+         title = "Scale-Location") +
+    geom_smooth(se = F, size = .5, colour = "red") +
+    geom_text(position = position_jitter(.3))
+  
+  # Combine all plots 
+  fin_plot <- cowplot::plot_grid(resid_hist, scat_resid_fitted, 
+                                 qq_plot, scale_location_plot,
+                                 labels = "AUTO", align = "r", 
+                                 nrow = 2, ncol = 2)
+  return(fin_plot)
 }
