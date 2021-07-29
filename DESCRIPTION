@@ -6,8 +6,7 @@ Authors@R:
            family = "Andrews",
            role = c("aut", "cre"),
            email = "mark.andrews@ntu.ac.uk")
-Description: Helper tools for teaching data analysis using R (description to 
-  be continued).
+Description: Helper tools for teaching data analysis using R.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -20,6 +19,9 @@ Imports:
     magrittr (>= 2.0.1),
     tibble (>= 3.1.3),
     formula.tools (>= 1.7.1),
+    GGally (>= 2.1.2),
+    purrr (>= 0.3.4),
+    ggthemes (>= 4.2.4),
     psych (>= 2.1.6)
 Depends: 
     R (>= 2.10)
