@@ -99,3 +99,22 @@ total_scores <- function(.data, ..., .method = 'mean', .append = FALSE){
   }
 }
 
+#' Recode specified values by new values
+#'
+#' @param x A vector, including column of data frame
+#' @param from The set of old values to be replaced by new ones
+#' @param to The set of new values to replace the old ones
+#'
+#' @return A vector that is the original vector but with old values replaced by new ones
+#' @export
+#'
+#' @examples
+#' # Replace any occurrence of 1 and 2 with 101 and 201, respectively
+#' x <- c(1, 2, 3, 4, 5, 1, 2)
+#' re_code(x, from = c(1, 2), to = c(101, 201))
+re_code <- function(x, from, to){                                         
+  plyr::mapvalues(x,                                                      
+                  from = from,                                            
+                  to = to,                                                
+                  warn_missing = F)                                       
+}

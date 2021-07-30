@@ -12,7 +12,12 @@ reference:
   - describe
   - describe_across
   - sum_xna
-
+- title: "Psychometric data analysis"
+  desc: "Functions for use in psychometric data analysis"
+  contents:
+   - re_code
+   - cronbach
+   - total_scores
 - title: "Statistical analysis"
   desc: "Functions for statistical analysis."
 - contents:
