@@ -1,11 +1,16 @@
 Package: psyntur
 Title: Tools to help teach data analysis using R to NTU Psychology students
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: 
-    person(given = "Mark",
+    c(person(given = "Mark",
            family = "Andrews",
            role = c("aut", "cre"),
-           email = "mark.andrews@ntu.ac.uk")
+           email = "mark.andrews@ntu.ac.uk"),
+       person(given = "Jens",
+           family = "Roeser",
+           role = c("aut"),
+           email = "jens.roeser@ntu.ac.uk")
+       )
 Description: Helper tools for teaching data analysis using R.
 License: GPL-3
 Encoding: UTF-8
