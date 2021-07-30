@@ -7,9 +7,9 @@
 cronbach(.data, ...)
 }
 \arguments{
-\item{.data}{}
+\item{.data}{A data frame with columns that are psychometric items. It is assumed that there will be rela}
 
-\item{...}{}
+\item{...}{A set of comma separated tidy selec}
 }
 \value{
 A vector of Cronbach alpha scores, with one score per each set of items.
