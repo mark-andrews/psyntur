@@ -4,25 +4,33 @@
 \alias{cronbach}
 \title{Calculate Cronbach's alpha for sets of psychometric scale items}
 \usage{
-cronbach(.data, ...)
+cronbach(.data, ..., .ci = 0.95)
 }
 \arguments{
-\item{.data}{A data frame with columns that are psychometric items. It is assumed that there will be rela}
+\item{.data}{A data frame with columns that are psychometric items.}
 
-\item{...}{A set of comma separated tidy selec}
+\item{...}{A set of comma separated tidy selectors that selects sets of
+columns from \code{.data}. For each set of columns, the Cronbach's alpha is
+computed.}
+
+\item{.ci}{The value of the confidence interval to calculate.}
 }
 \value{
-A vector of Cronbach alpha scores, with one score per each set of items.
+A data frame whose rows are psychometric scales and for each scale,
+we have the Cronbach's alpha, and the lower and upper bound of the
+confidence interval on alpha.
 }
 \description{
-This function calculates the Cronbach alpha for one
-or more sets of psychometric scale items. Each item
-is a variable in a data frame. Each set of items is
-defined by a tidy selection of a set of items.
+This function calculates the Cronbach alpha for one or more sets of
+psychometric scale items. Each item is a variable in a data frame. Each set
+of items is defined by a tidy selection of a set of items.
 }
 \examples{
- cronbach(test_psychometrics, 
-          x = starts_with('x'), 
-          y = y_1:y_10) 
+ # Return the Cronbach alpha and 95\% ci for two scales.
+ # The first scale, named `x`, is identified by all items beginning with `x_`.
+ # The second scale, named `y`, is identified by the consecutive items from `y_1` to `y_10`.
+ cronbach(test_psychometrics,
+          x = starts_with('x'),
+          y = y_1:y_10)
 
 }

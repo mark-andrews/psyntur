@@ -1,34 +1,51 @@
 #' Calculate Cronbach's alpha for sets of psychometric scale items
 #'
-#' This function calculates the Cronbach alpha for one
-#' or more sets of psychometric scale items. Each item
-#' is a variable in a data frame. Each set of items is 
-#' defined by a tidy selection of a set of items.
-#' 
-#' 
-#' @param .data A data frame with columns that are psychometric items. It is assumed that there will be rela
-#' @param ... A set of comma separated tidy selec
+#' This function calculates the Cronbach alpha for one or more sets of
+#' psychometric scale items. Each item is a variable in a data frame. Each set
+#' of items is defined by a tidy selection of a set of items.
 #'
-#' @return A vector of Cronbach alpha scores, with one score per each set of items.
+#'
+#' @param .data A data frame with columns that are psychometric items.
+#' @param ... A set of comma separated tidy selectors that selects sets of
+#'   columns from `.data`. For each set of columns, the Cronbach's alpha is
+#'   computed.
+#' @param .ci The value of the confidence interval to calculate.
+#'
+#' @return A data frame whose rows are psychometric scales and for each scale,
+#'   we have the Cronbach's alpha, and the lower and upper bound of the
+#'   confidence interval on alpha.
 #' @export
 #'
 #' @examples
-#'  cronbach(test_psychometrics, 
-#'           x = starts_with('x'), 
-#'           y = y_1:y_10) 
+#'  # Return the Cronbach alpha and 95% ci for two scales.
+#'  # The first scale, named `x`, is identified by all items beginning with `x_`.
+#'  # The second scale, named `y`, is identified by the consecutive items from `y_1` to `y_10`.
+#'  cronbach(test_psychometrics,
+#'           x = starts_with('x'),
+#'           y = y_1:y_10)
 #' 
-cronbach <- function(.data, ...){
+cronbach <- function(.data, ..., .ci = 0.95){
   
-  raw_alpha <- function(items) {psych::alpha(items)$total$raw_alpha}
+  raw_alpha <- function(items) {
+    total <- psych::alpha(items)$total
+    
+    z <- qnorm(.ci + (1 - .ci)/2)
+    
+    c(alpha = total$raw_alpha,
+      ci_lo = total$raw_alpha - z * total$ase,
+      ci_hi = total$raw_alpha + z * total$ase)
+    
+  }
   
   selection_sets <- rlang::enquos(...)
   
-  purrr::map(selection_sets, 
-             function(selection_set){
-               raw_alpha(select(.data, !!selection_set))
-             }
+  purrr::map_dfr(selection_sets, 
+                 function(selection_set){
+                   raw_alpha(select(.data, !!selection_set))
+                 },
+                 .id = 'scale'
   )
-                      
+  
 }
 
 
