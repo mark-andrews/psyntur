@@ -270,3 +270,50 @@ pairs_plot <- function(variables, data, by = NULL){
           strip.text = element_text(hjust = 0))
   
 }
+
+#' Make a scatterplot matrix
+#'
+#' @param .data A data frame
+#' @param ... A comma separated list of tidyselections of columns. This can be as simple as a set of column names.
+#'
+#' @return A GGally::ggpairs plot
+#' @export
+#'
+#' @examples
+#' data_df <- test_psychometrics %>% total_scores(x = starts_with('x_'), y = starts_with('y_'), z = starts_with('z_'))
+#' scatterplot_matrix(data_df, x, y, z)
+scatterplot_matrix <- function(.data, ..., .by = NULL, .bins = 10){
+  
+  expr <- rlang::expr(c(...))
+  col_indices <- tidyselect::eval_select(expr, data = .data)
+  col_indices
+
+  the_aes <- aes()
+
+  # If we have a `.by`, set that as the "colour" aesthetic
+  if (!is.null(enexpr(.by))) {
+    the_aes$colour <- enexpr(.by)
+    the_aes$fill <- enexpr(.by)
+  }
+
+  lowerFn <- function(data, mapping) {
+    ggplot2::ggplot(data = data, mapping = mapping) +
+      ggplot2::geom_point(alpha = 0.5, size = 0.5) +
+      ggplot2::geom_smooth(method = 'lm', color = "red", formula = 'y ~ x')
+  }
+
+  diagFn <- function(data, mapping) {
+    ggplot2::ggplot(data = data, mapping = mapping) +
+      ggplot2::geom_histogram(bins = .bins, colour = 'white')
+  }
+
+  GGally::ggpairs(
+      data = .data,
+      mapping = the_aes,
+      columns = col_indices,
+      lower = list(continuous = wrap(lowerFn)),
+      diag = list(continuous = wrap(diagFn)),
+      upper = list(continuous = wrap("cor", size = 5))
+    ) + ggplot2::theme_minimal()
+  
+}

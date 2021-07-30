@@ -6,6 +6,7 @@ reference:
   - histogram
   - scatterplot
   - tukeyboxplot
+  - scatterplot_matrix
 - title: "Descriptive statistics"
   desc: "Functions for doing descriptive statistics."
 - contents:
