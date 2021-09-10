@@ -132,3 +132,39 @@
 #' }
 #' @source This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
 "ansur"
+
+#'Self-Esteem Score Data for One-way Repeated Measures ANOVA
+#'
+#'@description The dataset contains 10 individuals' self-esteem score on three time points
+#'  during a specific diet to determine whether their self-esteem improved.
+#'
+#'  One-way repeated measures ANOVA can be performed in order to determine the
+#'  effect of time on the self-esteem score.
+#'  
+#'  This data set was taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name selfesteem
+#'@docType data
+#'@usage data("selfesteem")
+#'@format A data frame with 10 rows and 4 columns.
+#' @examples
+#' data(selfesteem)
+#' selfesteem
+NULL
+
+#'Job Satisfaction Data for Two-Way ANOVA
+#'
+#'@description
+#'  Contains the job satisfaction score organized by gender and education level.
+#'  This data set was taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name jobsatisfaction
+#'@docType data
+#'@usage data("jobsatisfaction")
+#'@format A data frame with 58 rows and 3 columns.
+#' @examples
+#' data(jobsatisfaction)
+#' jobsatisfaction
+NULL
