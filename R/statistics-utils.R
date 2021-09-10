@@ -240,3 +240,14 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
   
   stats::pairwise.t.test(y, x, p.adjust.method = p_adj)
 }
+
+#' Cohen's d and Hedges g effect size
+#' 
+#' This is wrapper to the [effsize::cohen.d()] function.
+#' @examples 
+#' cohen_d(weight ~ gender, data = ansur)
+#' cohen_d(age ~ gender, data = schizophrenia)
+#' @export
+cohen_d <- function(...){
+  effsize::cohen.d(...)
+}

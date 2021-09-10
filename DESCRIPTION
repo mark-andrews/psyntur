@@ -28,7 +28,8 @@ Imports:
     purrr (>= 0.3.4),
     ggthemes (>= 4.2.4),
     psych (>= 2.1.6),
-    plyr (>= 1.8.6)
+    plyr (>= 1.8.6),
+    effsize (>= 0.8.1)
 Depends: 
     R (>= 2.10)
 Suggests: 

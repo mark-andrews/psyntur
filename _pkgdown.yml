@@ -27,6 +27,7 @@ reference:
   - paired_t_test
   - pairwise_t_test
   - shapiro_test
+  - cohen_d
 - title: "Data sets"
   desc: "Included data sets."
 - contents:
