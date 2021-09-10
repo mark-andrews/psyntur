@@ -4,6 +4,7 @@ reference:
     Functions for data visualization.
 - contents: 
   - histogram
+  - densityplot
   - scatterplot
   - tukeyboxplot
   - scatterplot_matrix

@@ -219,6 +219,82 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
  
 }
 
+
+#' A density plot
+#'
+#' This is a wrapper to the typical `ggplot` based density plot, i.e., using
+#' `geom_density`. A continuous variable, `x`, is required as an input.
+#' Optionally, a `by` categorical variable can be provided.
+#'
+#' @param x The numeric variable that is to be density plotted.
+#' @param data A data frame with at least one numeric variable (the `x`
+#'   variable).
+#' @param by A categorical variable by which to group the `x` values. If
+#'   provided there will be one density plot for each set of `x` values grouped by
+#'   the values of the `by` variable.
+#' @param position If the `by` variable is provided, there are three ways these
+#'   multiple density plots can be positioned: stacked (`position = 'stack'`), 
+#'   superimposed (`position = identity'`).
+#' @param facet A character string or character vector. If provided, we
+#'   `facet_wrap` (by default) the histogram by the variables. This is
+#'   equivalent to the `facet_wrap(variables)` in `ggplot2`.
+#' @param facet_type By default, this takes the value of `wrap`, and `facet`
+#'   leads to a facet wrap. If `facet_type` is `grid`, then `facet` gives us a
+#'   `facet_grid`.
+#' @param alpha The transparency to for the filled histogram bars. This is
+#'   probably only required when using `position = 'identity'`.
+#' @examples
+#' densityplot(x = age, data = schizophrenia, by = gender)
+#' densityplot(x = age, data = schizophrenia, by = gender, position = 'identity', alpha = 0.7)
+#' densityplot(x = weight, data = ansur, facet = height_tercile)
+#' densityplot(x = weight, data = ansur, facet = c(height_tercile, age_tercile), facet_type = 'grid')
+#' @import ggplot2 dplyr
+#' @export
+densityplot <- function(x, data, by = NULL, position = 'stack', facet = NULL, facet_type = 'wrap', alpha = 1.0){
+  
+  if (is.null(enexpr(by))) {
+    the_aes <- aes(x = {{ x }})
+  } else {
+    the_aes <- aes(x = {{ x }}, fill = {{ by }})
+  }
+  
+  p1 <- ggplot(data, mapping = the_aes) + geom_density(position = position,
+                                                       alpha = alpha)
+  
+  if (!is.null(enexpr(facet))) {
+    
+    # this monstrosity to deal with unquoted, possibly vector, arguments
+    # to facet
+    facet_expr <- enexpr(facet)
+    
+    if(length(facet_expr) == 1) {
+      facet_vars <- as.list(facet_expr)
+    } else {
+      facet_vars <- as.list(facet_expr)[-1]
+    }
+    
+    quoted_facet_vars <- sapply(facet_vars, rlang::quo_name)
+    
+    if (facet_type == 'wrap'){
+      p1 <- p1 + facet_wrap(quoted_facet_vars, labeller = label_both)
+    } else if (facet_type == 'grid'){
+      p1 <- p1 + facet_grid(quoted_facet_vars, labeller = label_both)
+    } else {
+      stop(sprintf('facet_type should be "wrap" or "grid" not %s', facet_type))
+    }
+  }
+  
+  # minimal looks better than classic in a faceted plot
+  if (is.null(enexpr(facet))) {
+    p1 + theme_classic() + scale_fill_brewer(palette = "Set1")
+  } else {
+    p1 + theme_minimal() + scale_fill_brewer(palette = "Set1")
+  }
+  
+}
+
+
+
 #' A pairs plot
 #'
 #' This is a wrapper to the `GGally` based pairs plot of a list of variables 

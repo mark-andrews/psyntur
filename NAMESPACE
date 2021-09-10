@@ -2,6 +2,7 @@
 
 export("%>%")
 export(cronbach)
+export(densityplot)
 export(describe)
 export(describe_across)
 export(histogram)
