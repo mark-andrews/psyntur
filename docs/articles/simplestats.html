@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="simplestats_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="simplestats_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Some helper functions for statistical analysis</h1>
@@ -101,38 +101,41 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Many widely used and powerful statistical analysis commands — such as <code>lm</code>, <code>glm</code>, <code>lme4::lmer</code>, etc — have a simple and consistent calling syntax, often involving a “formula” (e.g., <code>y ~ x</code>), which makes them consistent, and easy to remember and apply. Some other functions, even simple ones, don’t use the formula syntax, or can be a bit awkward to use in some contexts, or require default values of arguments to be explicitly overridden. In the <code>psyntur</code>, there are some tools that aim to make this functions easier to apply.</p>
+<p>Many widely used and powerful statistical analysis commands — such as <code>lm</code>, <code>glm</code>, <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer</a></code>, etc — have a simple and consistent calling syntax, often involving a “formula” (e.g., <code>y ~ x</code>), which makes them consistent, and easy to remember and apply. Some other functions, even simple ones, don’t use the formula syntax, or can be a bit awkward to use in some contexts, or require default values of arguments to be explicitly overridden. In the <code>psyntur</code>, there are some tools that aim to make this functions easier to apply.</p>
 <p>These functions and the accompanying data sets can be loaded with the usual <code>library</code> command.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
+<span class="co">#&gt;   method from   </span>
+<span class="co">#&gt;   +.gg   ggplot2</span></code></pre></div>
 </div>
 <div id="independent-samples-t-test-with-t_test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#independent-samples-t-test-with-t_test" class="anchor"></a>Independent samples t-test with <code>t_test</code>
 </h1>
 <p>R’s <code><a href="https://rdrr.io/r/stats/t.test.html">stats::t.test</a></code> makes it easy to perform independent, paired, or one-sample t-tests. For the independent sample t-test, the default is the Welch two sample t-test. While arguably a good choice in practice, when t-tests are being taught to illustrate a simple example of normal linear model, the assumption of homogeneity of variance is used. To use this with <code>t.test</code>, this requires <code>var.equal = TRUE</code> to be used. The <code>t_test</code> function is <code>psyntur</code> is used when the standard independent t-test with homogeneity of variance is the desired default test. For example, in the following, we use it with the <code>faithfulfaces</code> data set.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">trustworthy</span> <span class="op">~</span> <span class="va">face_sex</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">trustworthy</span> <span class="op">~</span> <span class="va">face_sex</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Two Sample t-test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  trustworthy by face_sex</span>
 <span class="co">#&gt; t = 1.9389, df = 168, p-value = 0.05419</span>
-<span class="co">#&gt; alternative hypothesis: true difference in means is not equal to 0</span>
+<span class="co">#&gt; alternative hypothesis: true difference in means between group female and group male is not equal to 0</span>
 <span class="co">#&gt; 95 percent confidence interval:</span>
 <span class="co">#&gt;  -0.004253649  0.471193782</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; mean in group female   mean in group male </span>
-<span class="co">#&gt;             4.444061             4.210591</span></pre></div>
+<span class="co">#&gt;             4.444061             4.210591</span></code></pre></div>
 </div>
 <div id="paired-samples-t-test-with-paired_t_test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#paired-samples-t-test-with-paired_t_test" class="anchor"></a>Paired samples t-test with <code>paired_t_test</code>
 </h1>
 <p>For paired t-tests, the <code>paired_t_test</code> function can be used. In this function, a formula is not used. Instead, two variables in the same data frame, which are assumed to be paired in some manner, are used. For example, the <code>pairedsleep</code> data set (included in <code>psyntur</code>) is as follows.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">pairedsleep</span>
-<span class="co">#&gt; # A tibble: 10 x 3</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pairedsleep</span>
+<span class="co">#&gt; # A tibble: 10 × 3</span>
 <span class="co">#&gt;    ID       y1    y2</span>
 <span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 1       0.7   1.9</span>
@@ -144,10 +147,10 @@
 <span class="co">#&gt;  7 7       3.7   5.5</span>
 <span class="co">#&gt;  8 8       0.8   1.6</span>
 <span class="co">#&gt;  9 9       0     4.6</span>
-<span class="co">#&gt; 10 10      2     3.4</span></pre></div>
+<span class="co">#&gt; 10 10      2     3.4</span></code></pre></div>
 <p>This gives the difference from control in number of hours slept by 10 different patients when each took two different drugs. These time differences under the two drugs are <code>y1</code> and <code>y2</code>. A paired samples t-test can be performed as follows with this data.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/paired_t_test.html">paired_t_test</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, data <span class="op">=</span> <span class="va">pairedsleep</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/paired_t_test.html">paired_t_test</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, data <span class="op">=</span> <span class="va">pairedsleep</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Paired t-test</span>
 <span class="co">#&gt; </span>
@@ -158,18 +161,18 @@
 <span class="co">#&gt;  -2.4598858 -0.7001142</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt; mean of the differences </span>
-<span class="co">#&gt;                   -1.58</span></pre></div>
+<span class="co">#&gt;                   -1.58</span></code></pre></div>
 </div>
 <div id="pairwise-t-tests-with-pairwise_t_test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#pairwise-t-tests-with-pairwise_t_test" class="anchor"></a>Pairwise t-tests with <code>pairwise_t_test</code>
 </h1>
 <p>For independent t-tests applied all pairs of a set of variables, to which p-value adjustments are applied, we can use <code>pairwise_t_test</code>. For example, the following creates a categorical variable with four values, which are the interaction of two binary variables.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">data_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">vizverb</span>, IV <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">response</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">vizverb</span>, IV <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">response</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Independent samples t-tests with Bonferroni corrections on the <code>time</code> variable applied to all pairs of the four levels of the <code>IV</code> variable can be done as follows.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/pairwise_t_test.html">pairwise_t_test</a></span><span class="op">(</span><span class="va">time</span> <span class="op">~</span> <span class="va">IV</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/pairwise_t_test.html">pairwise_t_test</a></span><span class="op">(</span><span class="va">time</span> <span class="op">~</span> <span class="va">IV</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  Pairwise comparisons using t tests with pooled SD </span>
 <span class="co">#&gt; </span>
@@ -180,29 +183,29 @@
 <span class="co">#&gt; verbal.visual 1.0000        0.0166        -            </span>
 <span class="co">#&gt; visual.visual 0.0044        2.9e-07       0.0241       </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; P value adjustment method: bonferroni</span></pre></div>
+<span class="co">#&gt; P value adjustment method: bonferroni</span></code></pre></div>
 </div>
 <div id="shipiro-wilk-test-with-shapiro_test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#shipiro-wilk-test-with-shapiro_test" class="anchor"></a>Shipiro-Wilk test with <code>shapiro_test</code>
 </h1>
 <p>The Shapiro-Wilk test of normality can be applied to a single numeric vector in a data frame as in the following example.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/shapiro_test.html">shapiro_test</a></span><span class="op">(</span><span class="va">time</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 2</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/shapiro_test.html">shapiro_test</a></span><span class="op">(</span><span class="va">time</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 2</span>
 <span class="co">#&gt;   statistic   p_value</span>
 <span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     0.911 0.0000378</span></pre></div>
+<span class="co">#&gt; 1     0.911 0.0000378</span></code></pre></div>
 <p>To test the normality of each subset of a variable, such as <code>time</code>, corresponding to the values of a categorical variable, we can use a <code>by</code> variable as in the following example.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/shapiro_test.html">shapiro_test</a></span><span class="op">(</span><span class="va">time</span>, by <span class="op">=</span> <span class="va">IV</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 3</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/shapiro_test.html">shapiro_test</a></span><span class="op">(</span><span class="va">time</span>, by <span class="op">=</span> <span class="va">IV</span>, data <span class="op">=</span> <span class="va">data_df</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 4 × 3</span>
 <span class="co">#&gt;   IV            statistic  p_value</span>
 <span class="co">#&gt;   &lt;fct&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 verbal.verbal     0.755 0.000198</span>
 <span class="co">#&gt; 2 visual.verbal     0.861 0.00809 </span>
 <span class="co">#&gt; 3 verbal.visual     0.938 0.221   </span>
-<span class="co">#&gt; 4 visual.visual     0.914 0.0763</span></pre></div>
+<span class="co">#&gt; 4 visual.visual     0.914 0.0763</span></code></pre></div>
 </div>
   </div>
 
@@ -217,7 +220,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Andrews.</p>
+  <p>Developed by Mark Andrews, Jens Roeser.</p>
 </div>
 
 <div class="pkgdown">

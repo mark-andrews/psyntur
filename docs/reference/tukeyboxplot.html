@@ -90,7 +90,7 @@ corresponds to a sufficiently large set of y values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ corresponds to a sufficiently large set of y values." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -168,7 +168,9 @@ corresponds to a sufficiently large set of <code>y</code> values.</p>
   by <span class='op'>=</span> <span class='cn'>NULL</span>,
   jitter <span class='op'>=</span> <span class='cn'>FALSE</span>,
   box_width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>3</span>,
-  jitter_width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>5</span>
+  jitter_width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>5</span>,
+  xlab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylab <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,6 +209,14 @@ used, <code>box_width = 1/3</code>, means that boxes will be relatively narrow.<
 example, set <code>jitter_width = 1</code> if you want the jitter to be as wide the
 box.</p></td>
     </tr>
+    <tr>
+      <th>xlab</th>
+      <td><p>The label of the x-axis (defaults to the <code>x</code> variable name).</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>The label of the y-axis (defaults to the <code>y</code> variable name).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -237,7 +247,7 @@ commands.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Mark Andrews.</p>
+  <p>Developed by Mark Andrews, Jens Roeser.</p>
 </div>
 
 <div class="pkgdown">

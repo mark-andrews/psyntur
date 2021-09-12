@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="visualization_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="visualization_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simple data visualization</h1>
@@ -103,89 +103,92 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>R provides very powerful tools for data visualization, particularly <code>ggplot</code>. This leads to a dilemma when teaching, however. Do we first teach the basics or <code>ggplot</code> <em>before</em> students can visualize their data, or do we use other simpler tools for summarization and visualization, albeit of a limited kind, and later teach more about the powerful <code>ggplot</code> tools? The <code>psyntur</code> package aims to provide some tools if the latter approach is taken. These functions aim to make it quick and easy to perform the common kinds of data exploration and visualization. All functions, however, are wrappers around sets of <code>ggplot</code> commands In this vignette, we showcase some of these tools.</p>
 <p>The required functions as well as some example psychological science data sets can be loaded with the usual <code>library</code> command.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
+<span class="co">#&gt;   method from   </span>
+<span class="co">#&gt;   +.gg   ggplot2</span></code></pre></div>
 </div>
 <div id="scatterplots" class="section level1">
 <h1 class="hasAnchor">
 <a href="#scatterplots" class="anchor"></a>Scatterplots</h1>
 <p>We can perform a standard 2d scatterplot with <code>scatterplot</code>. For example, using the <code>faithfulfaces</code> data provided by <code>psyntur</code>, we can plot a scatterplot showing the relationship between the perceived (sexual) faithfulness of a person in a photo against their perceived trustworthiness as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-2-1.png" width="480"></p>
 <p>We can colour code the points according to the value of a third, usually categorical variable, by using the <code>by</code> argument. For example, here we colour code the points according to the sex of the person in the photo.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
 <p>We can add the line of best fit to all points in the scatterplot, or to each set of coloured points in the scatterplot if <code>by</code> is used, with the <code>best_fit_line</code> argument.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span>, 
-            by <span class="op">=</span> <span class="va">face_sex</span>, best_fit_line <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/scatterplot.html">scatterplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trustworthy</span>, y <span class="op">=</span> <span class="va">faithful</span>, data <span class="op">=</span> <span class="va">faithfulfaces</span>, 
+            by <span class="op">=</span> <span class="va">face_sex</span>, best_fit_line <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 </div>
 <div id="boxplots" class="section level1">
 <h1 class="hasAnchor">
 <a href="#boxplots" class="anchor"></a>Boxplots</h1>
 <p>Boxplots, also known as box-and-whisker plots, or Tukey boxplots or box-and-whisker plots, display the distributions of univariate data, optionally grouped according to other variables. For example, to show a boxplot of the distribution of all the response times in an experiment that collected response times in different conditions, which is provided by the <code>vizverb</code> data sets, we can do the following.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">vizverb</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">vizverb</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
 <p>We can add all the points as jittered points as follows.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">vizverb</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">vizverb</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
 <p>If we want to plot the distribution of <code>time</code> for each of the two different tasks performed in the experiment, provide by the <code>task</code> variable in <code>vizverb</code>, we can set the <code>x</code> variable to <code>task</code> as follows.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-7-1.png" width="480"></p>
 <p>The <code>vizverb</code> data is from a two-way factorical experiment where reaction times are collected for different tasks (the <code>task</code> variable) and using different responses (the <code>response</code> variable). We can plot the distribution of <code>time</code> according to both <code>task</code> and <code>response</code> by using <code>x</code> and <code>by</code> together as follows.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span>, by <span class="op">=</span> <span class="va">response</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span>, by <span class="op">=</span> <span class="va">response</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 <p>Jittered points can be put on these plots by using <code>jitter = TRUE</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span>,
-             by <span class="op">=</span> <span class="va">response</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">time</span>, x<span class="op">=</span> <span class="va">task</span>, data <span class="op">=</span> <span class="va">vizverb</span>,
+             by <span class="op">=</span> <span class="va">response</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
 <p>Continuous variables can be used as the <code>x</code> variable as in the following example using the R built in <code>ToothGrowth</code> data set.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">len</span>, x <span class="op">=</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">ToothGrowth</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">len</span>, x <span class="op">=</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">ToothGrowth</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-10-1.png" width="480"></p>
 <p>This can be used with <code>by</code> and <code>jitter</code> too.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">len</span>, x <span class="op">=</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">ToothGrowth</span>,
-             by <span class="op">=</span> <span class="va">supp</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span>, jitter_width <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/tukeyboxplot.html">tukeyboxplot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">len</span>, x <span class="op">=</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">ToothGrowth</span>,
+             by <span class="op">=</span> <span class="va">supp</span>, jitter <span class="op">=</span> <span class="cn">TRUE</span>, jitter_width <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 </div>
 <div id="histograms" class="section level1">
 <h1 class="hasAnchor">
 <a href="#histograms" class="anchor"></a>Histograms</h1>
 <p>Histograms can be made with the <code>histrogram</code> function. For example, to plot the onset ages of schizophrenia, using the <code>schizophrenia</code> data, we can do the following.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-12-1.png" width="480"></p>
 <p>We can change the number of bins from its default of 10 with the <code>bins</code> argument.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-13-1.png" width="480"></p>
 <p>If we use a grouping variable, such as the <code>gender</code> variable, using the <code>by</code> argument, we obtain a stacked histogram.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-14-1.png" width="576"></p>
 <p>When using <code>by</code>, we can obtain <em>dodged</em> rather than stacked histograms by setting <code>position = 'dodge'</code> as in the following example.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
-          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
+          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
 <p>Likewise, we can obtain overlapping histograms by setting <code>position = 'identity'</code> as in the following example.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
-          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'identity'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
+          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'identity'</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 <p>In the case of <code>position = 'identity'</code>, it is usually required to make the bars transparent by setting the <code>alpha</code> value to be less than 1.0, as in the following example.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
-          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'identity'</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/histogram.html">histogram</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">schizophrenia</span>, 
+          by <span class="op">=</span> <span class="va">gender</span>, bins <span class="op">=</span> <span class="fl">20</span>, position <span class="op">=</span> <span class="st">'identity'</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-17-1.png" width="576"></p>
 </div>
   </div>
@@ -201,7 +204,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Andrews.</p>
+  <p>Developed by Mark Andrews, Jens Roeser.</p>
 </div>
 
 <div class="pkgdown">

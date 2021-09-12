@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="exploration_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="exploration_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simple data exploration</h1>
@@ -103,96 +103,99 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The <code>summarize</code> function in <code>dplyr</code>, especially when combined with <code>group_by</code> and <code>across</code>, provides powerful tools for exploring data using summary statistics. The <code>psyntur</code> package provides some wrappers to these tools to allow data exploration, albeit of a limited kind, to be done quickly and easily. We explore some of these functions in this vignette.</p>
 <p>Load the <code>psyntur</code> functions and data sets with the usual <code>library</code> command.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">psyntur</span><span class="op">)</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
+<span class="co">#&gt;   method from   </span>
+<span class="co">#&gt;   +.gg   ggplot2</span></code></pre></div>
 </div>
 <div id="summary-statistics-with-describe" class="section level1">
 <h1 class="hasAnchor">
 <a href="#summary-statistics-with-describe" class="anchor"></a>Summary statistics with <code>describe</code>
 </h1>
 <p>We can use the <code>describe</code> function in <code>psyntur</code>. The first argument to <code>describe</code> should be the data frame. Subsequent arguments should be named arguments of summary statistics functions, like <code>mean</code>, <code>median</code>, etc., applied to any variables in the data frame. For example, using the <code>faithfulfaces</code> data frame, we can obtain the arithmetic mean and standard deviation of the <code>faithful</code> variable as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span>, stdev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 2</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span>, stdev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 × 2</span>
 <span class="co">#&gt;     avg stdev</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  5.14 0.957</span></pre></div>
+<span class="co">#&gt; 1  5.14 0.957</span></code></pre></div>
 <p>We can apply the same or different functions to the same or different variables.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>,
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>,
          avg_faith <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span>, 
          avg_trust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">trustworthy</span><span class="op">)</span>,
          sd_trust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">trustworthy</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   avg_faith avg_trust sd_trust</span>
 <span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1      5.14      4.32    0.791</span></pre></div>
+<span class="co">#&gt; 1      5.14      4.32    0.791</span></code></pre></div>
 <p>We can obtain the summary statistics for the chosen variables for each group of a third variable using a <code>by</code> variable.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span>, 
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span>, 
          avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span>, stdev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">faithful</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;   face_sex   avg stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female    5.55 0.802</span>
-<span class="co">#&gt; 2 male      4.75 0.932</span></pre></div>
+<span class="co">#&gt; 2 male      4.75 0.932</span></code></pre></div>
 <p>The <code>by</code> argument may be a vector of variables. In this case, the chosen variables are grouped by the combination of the <code>by</code> variables. For example, in the following we group the <code>time</code> variable in <code>vizverb</code> by both <code>task</code> and <code>response</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">vizverb</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">response</span><span class="op">)</span>,
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">vizverb</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">response</span><span class="op">)</span>,
          avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>,
          median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>,
          iqr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>,
          stdev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 6</span>
+<span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   task   response   avg median   iqr stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 verbal verbal   12.8   11.2   2.92  5.17</span>
 <span class="co">#&gt; 2 verbal visual   13.7   13.5   4.96  3.98</span>
 <span class="co">#&gt; 3 visual verbal    9.01   7.68  4.65  3.37</span>
-<span class="co">#&gt; 4 visual visual   18.2   16.0   7.59  6.12</span></pre></div>
+<span class="co">#&gt; 4 visual visual   18.2   16.0   7.59  6.12</span></code></pre></div>
 </div>
 <div id="multiple-summary-functions-to-multiple-variables" class="section level1">
 <h1 class="hasAnchor">
 <a href="#multiple-summary-functions-to-multiple-variables" class="anchor"></a>Multiple summary functions to multiple variables</h1>
 <p>It would be tedious and repetitive to use <code>describe</code> as above if wanted to apply the same set of summary statistic functions to a set of variables. Instead, we can use <code>describe_across</code>. For example, to calculate the mean, median, standard deviation to two variables, <code>trustworthy</code> and <code>faithful</code>, in the <code>faithfulfaces</code> data set, we can do the following.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean</span>, median <span class="op">=</span> <span class="va">median</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 6</span>
-<span class="co">#&gt;   trustworthy_avg trustworthy_med… trustworthy_std… faithful_avg faithful_median</span>
-<span class="co">#&gt;             &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1            4.32             4.24            0.791         5.14            5.24</span>
-<span class="co">#&gt; # … with 1 more variable: faithful_stdev &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; # A tibble: 1 × 6</span>
+<span class="co">#&gt;   trustworthy_avg trustworthy_median trustworthy_stdev faithful_avg faithful_median</span>
+<span class="co">#&gt;             &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt; 1            4.32               4.24             0.791         5.14            5.24</span>
+<span class="co">#&gt; # … with 1 more variable: faithful_stdev &lt;dbl&gt;</span></code></pre></div>
 <p>Note that the data frame that is returned is in a wide format. We can pivot this to a longer format by saying <code>pivot = TRUE</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean</span>, median <span class="op">=</span> <span class="va">median</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>,
                 pivot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt; # A tibble: 2 × 4</span>
 <span class="co">#&gt;   variable      avg median stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 trustworthy  4.32   4.24 0.791</span>
-<span class="co">#&gt; 2 faithful     5.14   5.24 0.957</span></pre></div>
+<span class="co">#&gt; 2 faithful     5.14   5.24 0.957</span></code></pre></div>
 <p>We can use the <code>by</code> variable to calculate the summary statistics for each subgroup corresponding to each value of the <code>by</code> variable, as in the following example.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean</span>, median <span class="op">=</span> <span class="va">median</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>,
                 by <span class="op">=</span> <span class="va">face_sex</span>,
                 pivot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 5</span>
+<span class="co">#&gt; # A tibble: 4 × 5</span>
 <span class="co">#&gt;   face_sex variable      avg median stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female   trustworthy  4.44   4.29 0.742</span>
 <span class="co">#&gt; 2 female   faithful     5.55   5.71 0.802</span>
 <span class="co">#&gt; 3 male     trustworthy  4.21   4.18 0.822</span>
-<span class="co">#&gt; 4 male     faithful     4.75   4.85 0.932</span></pre></div>
+<span class="co">#&gt; 4 male     faithful     4.75   4.85 0.932</span></code></pre></div>
 <p>As in the case of <code>describe</code>, the <code>by</code> argument can be a vector of variables.</p>
 </div>
 <div id="dealing-with-missing-values-with-_xna" class="section level1">
@@ -200,36 +203,36 @@
 <a href="#dealing-with-missing-values-with-_xna" class="anchor"></a>Dealing with missing values with <code>_xna</code>
 </h1>
 <p>When variable have <code>NA</code> values, most summary statistics function will, by default, return <code>NA</code>. To illustrate this, we can modify <code>faithfulfaces</code> to contain <code>NA</code>’s for the <code>faithful</code> variable.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">faithfulfaces_na</span> <span class="op">&lt;-</span> <span class="va">faithfulfaces</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>faithful <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">faithful</span> <span class="op">&gt;</span> <span class="fl">6</span>, <span class="cn">NA</span>, <span class="va">faithful</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">faithfulfaces_na</span> <span class="op">&lt;-</span> <span class="va">faithfulfaces</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>faithful <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">faithful</span> <span class="op">&gt;</span> <span class="fl">6</span>, <span class="cn">NA</span>, <span class="va">faithful</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now, if we try one of the above <code>describe</code> or <code>describe_aross</code> functions with the <code>faithful</code> variable, we will obtain corresponding <code>NA</code> values.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces_na</span>,
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces_na</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean</span>, median <span class="op">=</span> <span class="va">median</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>,
                 by <span class="op">=</span> <span class="va">face_sex</span>,
                 pivot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 5</span>
+<span class="co">#&gt; # A tibble: 4 × 5</span>
 <span class="co">#&gt;   face_sex variable      avg median  stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female   trustworthy  4.44   4.29  0.742</span>
 <span class="co">#&gt; 2 female   faithful    NA     NA    NA    </span>
 <span class="co">#&gt; 3 male     trustworthy  4.21   4.18  0.822</span>
-<span class="co">#&gt; 4 male     faithful    NA     NA    NA</span></pre></div>
+<span class="co">#&gt; 4 male     faithful    NA     NA    NA</span></code></pre></div>
 <p>Of course, if we set <code>na.rm = TRUE</code> in any or all of the summary functions, we will remove the <code>NA</code> values before the statistics are calculated. This is relatively easy to do with <code>describe</code>, as in the following example.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span>, 
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">faithfulfaces</span>, by <span class="op">=</span> <span class="va">face_sex</span>, 
          avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">faithful</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, stdev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">faithful</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;   face_sex   avg stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female    5.55 0.802</span>
-<span class="co">#&gt; 2 male      4.75 0.932</span></pre></div>
+<span class="co">#&gt; 2 male      4.75 0.932</span></code></pre></div>
 <p>However, for <code>describe</code> across, we pass in a list of functions, and so to set <code>na.rm = T</code>, we can to create <code>purrr</code> style anonymous functions calling the summary statistic function with <code>na.rm = T</code>, as in the following example.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces_na</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, 
@@ -238,29 +241,29 @@
                 by <span class="op">=</span> <span class="va">face_sex</span>,
                 pivot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 5</span>
+<span class="co">#&gt; # A tibble: 4 × 5</span>
 <span class="co">#&gt;   face_sex variable      avg median stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female   trustworthy  4.44   4.29 0.742</span>
 <span class="co">#&gt; 2 female   faithful     5.11   5.26 0.606</span>
 <span class="co">#&gt; 3 male     trustworthy  4.21   4.18 0.822</span>
-<span class="co">#&gt; 4 male     faithful     4.65   4.82 0.845</span></pre></div>
+<span class="co">#&gt; 4 male     faithful     4.65   4.82 0.845</span></code></pre></div>
 <p>Anonymous function like this are not very transparent for those new to R, and the resulting function looks quite complex.</p>
 <p>In order to avoid using code like <code>~mean(., na.rm = T)</code>, for a number of commonly used summary statistic functions (<code>sum</code>, <code>mean</code>, <code>median</code>, <code>var</code>, <code>sd</code>, <code>IQR</code>), we have made counterparts where <code>na.rm</code> is set to <code>TRUE</code> by default. These functions have the same name as the original with the suffix <code>_xna</code> (but <code>IQR</code> is <code>iqr_xna</code>, not <code>IQR_xna</code>). As such, we can do the following.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces_na</span>,
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_across.html">describe_across</a></span><span class="op">(</span><span class="va">faithfulfaces_na</span>,
                 variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">trustworthy</span>, <span class="va">faithful</span><span class="op">)</span>,
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean_xna</span>, median <span class="op">=</span> <span class="va">median_xna</span>, stdev <span class="op">=</span> <span class="va">sd_xna</span><span class="op">)</span>,
                 by <span class="op">=</span> <span class="va">face_sex</span>,
                 pivot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 5</span>
+<span class="co">#&gt; # A tibble: 4 × 5</span>
 <span class="co">#&gt;   face_sex variable      avg median stdev</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 female   trustworthy  4.44   4.29 0.742</span>
 <span class="co">#&gt; 2 female   faithful     5.11   5.26 0.606</span>
 <span class="co">#&gt; 3 male     trustworthy  4.21   4.18 0.822</span>
-<span class="co">#&gt; 4 male     faithful     4.65   4.82 0.845</span></pre></div>
+<span class="co">#&gt; 4 male     faithful     4.65   4.82 0.845</span></code></pre></div>
 </div>
   </div>
 
@@ -275,7 +278,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Andrews.</p>
+  <p>Developed by Mark Andrews, Jens Roeser.</p>
 </div>
 
 <div class="pkgdown">
