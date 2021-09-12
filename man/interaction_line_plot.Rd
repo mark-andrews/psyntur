@@ -4,7 +4,7 @@
 \alias{interaction_line_plot}
 \title{Make a interaction line plot}
 \usage{
-interaction_line_plot(y, x, by, data, ylim = NULL)
+interaction_line_plot(y, x, by, data, ylim = NULL, xlab = NULL, ylab = NULL)
 }
 \arguments{
 \item{y}{A continuous variable to be plotted along the y-axis}
@@ -16,13 +16,22 @@ interaction_line_plot(y, x, by, data, ylim = NULL)
 \item{data}{A data frame with the \code{x}, \code{y}, \code{by} variables}
 
 \item{ylim}{A vector of limits for the y-axis}
+
+\item{xlab}{The label of the x-axis (defaults to the \code{x} variable name).}
+
+\item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \value{
-A ggplot2 objecct
+A ggplot2 object
 }
 \description{
 Make a interaction line plot
 }
 \examples{
 interaction_line_plot(y = score, x = time, by = treatment, data = selfesteem2_long, ylim = c(70, 100))
+interaction_line_plot(y = score, x = time, by = treatment, 
+                      data = selfesteem2_long, 
+                      xlab = 'measurement time',
+                      ylab = 'self esteem score',
+                      ylim = c(70, 100))
 }

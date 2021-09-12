@@ -11,7 +11,9 @@ densityplot(
   position = "stack",
   facet = NULL,
   facet_type = "wrap",
-  alpha = 1
+  alpha = 1,
+  xlab = NULL,
+  ylab = NULL
 )
 }
 \arguments{
@@ -38,6 +40,10 @@ leads to a facet wrap. If \code{facet_type} is \code{grid}, then \code{facet} gi
 
 \item{alpha}{The transparency to for the filled histogram bars. This is
 probably only required when using \code{position = 'identity'}.}
+
+\item{xlab}{The label of the x-axis (defaults to the \code{x} variable name).}
+
+\item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \description{
 This is a wrapper to the typical \code{ggplot} based density plot, i.e., using

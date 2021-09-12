@@ -11,7 +11,9 @@ tukeyboxplot(
   by = NULL,
   jitter = FALSE,
   box_width = 1/3,
-  jitter_width = 1/5
+  jitter_width = 1/5,
+  xlab = NULL,
+  ylab = NULL
 )
 }
 \arguments{
@@ -33,6 +35,10 @@ used, \code{box_width = 1/3}, means that boxes will be relatively narrow.}
 \item{jitter_width}{The width of the jitter relative to box width. For
 example, set \code{jitter_width = 1} if you want the jitter to be as wide the
 box.}
+
+\item{xlab}{The label of the x-axis (defaults to the \code{x} variable name).}
+
+\item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \value{
 A \code{ggplot} object, which may be modified with further \code{ggplot2}
