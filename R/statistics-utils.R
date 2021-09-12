@@ -1,7 +1,8 @@
 #' Shapiro-Wilk normality test
 #' 
-#' A wrapper around [stats::shapiro.test()]. It can be applied to single vectors
-#' or groups of vectors.
+#' This function is a wrapper around [stats::shapiro.test()]. 
+#' It implements the Shapiro-Wilk test that tests the null hypothesis that a sample of values is a sample from a normal distribution.
+#' Thie function can be applied to single vectors or groups of vectors.
 #' 
 #' @return A tibble data frame with one row for each value of the `by` variable,
 #'   or one row overall if there is no `by` variable. For the `y` variable whose
