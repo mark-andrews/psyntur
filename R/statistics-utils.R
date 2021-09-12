@@ -252,3 +252,21 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
 cohen_d <- function(...){
   effsize::cohen.d(...)
 }
+
+#' Show the dummy code of a categorical variable
+#' 
+#' For each value of a categorical variables, show the binary
+#' code used in a regression model to represent its value.
+#' This is wrapper to the [fastDummies::dummy_cols()] function.
+#' @examples 
+#' get_dummy_code(PlantGrowth, group)
+#' @export
+get_dummy_code <- function(Df, variable){
+  
+  var <- rlang::enquo(variable)
+  
+  tmp_df <- fastDummies::dummy_cols(Df, remove_first_dummy = TRUE)
+  tmp_df <- dplyr::select(tmp_df, dplyr::starts_with(rlang::as_label(var)))
+  dplyr::distinct(tmp_df)
+  
+}

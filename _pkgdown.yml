@@ -29,6 +29,7 @@ reference:
   - pairwise_t_test
   - shapiro_test
   - cohen_d
+  - get_dummy_code
 - title: "Data sets"
   desc: "Included data sets."
 - contents:
