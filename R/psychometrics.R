@@ -64,9 +64,9 @@ cronbach <- function(.data, ..., .ci = 0.95){
 #'
 #' @examples
 #' # Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`
-#' total_scores(test_psychometrics, x = starts_with('x'), y = starts_with('y')
+#' total_scores(test_psychometrics, x = starts_with('x'), y = starts_with('y'))
 #' # Calculate the sum of all items beginning with `z_` and separately all items beginning with `x_`
-#' total_scores(test_psychometrics, .method = 'sum', z = starts_with('z'), x = starts_with('x_')
+#' total_scores(test_psychometrics, .method = 'sum', z = starts_with('z'), x = starts_with('x_'))
 #' # Calculate the mean of all items from `x_1` to `y_10`
 #' total_scores(test_psychometrics, xy = x_1:y_10)
 total_scores <- function(.data, ..., .method = 'mean', .append = FALSE){

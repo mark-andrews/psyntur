@@ -32,7 +32,7 @@ Imports:
     effsize (>= 0.8.1),
     rlang (>= 0.4.11),
     fastDummies (>= 1.6.3),
-    ez (> 4.4.0)
+    ez (>= 4.4)
 Depends: 
     R (>= 2.10)
 Suggests: 
