@@ -80,3 +80,14 @@ ansur <- read_csv("http://data.ntupsychology.net/weight.csv") %>%
          age_tercile = ntile(age, 3))
 
 usethis::use_data(ansur, overwrite = TRUE)
+
+
+
+# selfesteem2_long --------------------------------------------------------
+
+data("selfesteem2", package = 'datarium')
+
+selfesteem2_long <- selfesteem2 %>%
+  pivot_longer(cols = t1:t3, names_to = 'time', values_to = 'score')
+
+usethis::use_data(selfesteem2_long, overwrite = TRUE)

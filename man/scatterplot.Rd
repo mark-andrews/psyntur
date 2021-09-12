@@ -4,7 +4,15 @@
 \alias{scatterplot}
 \title{A two dimensional scatterplot}
 \usage{
-scatterplot(x, y, data, by = NULL, best_fit_line = FALSE)
+scatterplot(
+  x,
+  y,
+  data,
+  by = NULL,
+  best_fit_line = FALSE,
+  xlab = NULL,
+  ylab = NULL
+)
 }
 \arguments{
 \item{x}{A numeric variable in \code{data}. Its values are plotted on the x axis.}
@@ -19,6 +27,10 @@ coloured.}
 
 \item{best_fit_line}{A logical variable indicating if the line of best fit
 should shown or not.}
+
+\item{xlab}{The label of the x-axis (defaults to the \code{x} variable name).}
+
+\item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \description{
 This function is a wrapper around the typical \code{ggplot} command to create two
@@ -31,6 +43,8 @@ variable is provided.
 }
 \examples{
 scatterplot(x = attractive, y = trustworthy, data = faithfulfaces)
+scatterplot(x = attractive, y = trustworthy, data = faithfulfaces,
+            xlab = 'attractiveness', ylab = 'trustworthiness')
 scatterplot(x = attractive, y = trustworthy, data = faithfulfaces,
             by = face_sex)
 scatterplot(x = trustworthy, y = faithful, data = faithfulfaces,

@@ -132,3 +132,102 @@
 #' }
 #' @source This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
 "ansur"
+
+#'Self-Esteem Score Data for One-way Repeated Measures ANOVA
+#'
+#'@description The dataset contains 10 individuals' self-esteem score on three time points
+#'  during a specific diet to determine whether their self-esteem improved.
+#'
+#'  One-way repeated measures ANOVA can be performed in order to determine the
+#'  effect of time on the self-esteem score.
+#'  
+#'  This data set was taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name selfesteem
+#'@docType data
+#'@usage data("selfesteem")
+#'@format A data frame with 10 rows and 4 columns.
+#' @examples
+#' data(selfesteem)
+#' selfesteem
+NULL
+
+#'Job Satisfaction Data for Two-Way ANOVA
+#'
+#'@description
+#'  Contains the job satisfaction score organized by gender and education level.
+#'  This data set was taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name jobsatisfaction
+#'@docType data
+#'@usage data("jobsatisfaction")
+#'@format A data frame with 58 rows and 3 columns.
+#' @examples
+#' data(jobsatisfaction)
+#' jobsatisfaction
+NULL
+
+
+#'Self Esteem Score Data for Two-way Repeated Measures ANOVA
+#'
+#'@description Data are the self esteem score of 12 individuals enrolled in 2
+#'  successive short-term trials (4 weeks) - control (placebo) and special diet
+#'  trials.
+#'
+#'  The self esteem score was recorded at three time points: at the beginning
+#'  (t1), midway (t2) and at the end (t3) of the trials.
+#'
+#'  The same 12 participants are enrolled in the two different trials with
+#'  enough time between trials.
+#'
+#'  Two-way repeated measures ANOVA can be performed in order to determine
+#'  whether there is interaction between time and treatment on the self
+#'  esteem score.
+#'  
+#'  This data set was taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name selfesteem2
+#'@docType data
+#'@usage data("selfesteem2")
+#'@format A data frame with 24 rows and 5 columns.
+#' @examples
+#' data(selfesteem2)
+#' selfesteem2
+NULL
+
+#'Self Esteem Score Data for Two-way Repeated Measures ANOVA: Long format
+#'
+#'@description Data are the self esteem score of 12 individuals enrolled in 2
+#'  successive short-term trials (4 weeks) - control (placebo) and special diet
+#'  trials.
+#'
+#'  The self esteem score was recorded at three time points: at the beginning
+#'  (t1), midway (t2) and at the end (t3) of the trials.
+#'
+#'  The same 12 participants are enrolled in the two different trials with
+#'  enough time between trials.
+#'
+#'  Two-way repeated measures ANOVA can be performed in order to determine
+#'  whether there is interaction between time and treatment on the self
+#'  esteem score.
+#'  
+#'  This data set was converted from the `selfesteem2` data taken from the
+#'   \href{https://cran.r-project.org/package=datarium}{`datarium` R
+#'   package}.
+#'@name selfesteem2_long
+#'@docType data
+#'@usage data("selfesteem2_long")
+#'@format A data frame with 72 rows and 4 columns.
+#' \describe{ 
+#'    \item{id}{Unique ID of the person}
+#'    \item{treatment}{Binary variable indicating the treatment condition: `Diet` or `ctr`.}
+#'    \item{time}{A categorical variable indicating the time of measurement: beginning (`t1`), midway (`t2`) and at the end (`t3`) }
+#'    \item{score}{Self-esteem score}
+#' }
+#' @examples
+#' data(selfesteem2_long)
+#' selfesteem2_long
+"selfesteem2_long"

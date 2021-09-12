@@ -21,8 +21,9 @@ values of they \code{by} variable, or for all values if there is no \code{by}
 variable, return the Shapiro-Wilk statistic, and the corresponding p-value.
 }
 \description{
-A wrapper around \code{\link[stats:shapiro.test]{stats::shapiro.test()}}. It can be applied to single vectors
-or groups of vectors.
+This function is a wrapper around \code{\link[stats:shapiro.test]{stats::shapiro.test()}}.
+It implements the Shapiro-Wilk test that tests the null hypothesis that a sample of values is a sample from a normal distribution.
+Thie function can be applied to single vectors or groups of vectors.
 }
 \examples{
 shapiro_test(faithful, data = faithfulfaces)

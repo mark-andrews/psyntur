@@ -1,7 +1,8 @@
 #' Shapiro-Wilk normality test
 #' 
-#' A wrapper around [stats::shapiro.test()]. It can be applied to single vectors
-#' or groups of vectors.
+#' This function is a wrapper around [stats::shapiro.test()]. 
+#' It implements the Shapiro-Wilk test that tests the null hypothesis that a sample of values is a sample from a normal distribution.
+#' Thie function can be applied to single vectors or groups of vectors.
 #' 
 #' @return A tibble data frame with one row for each value of the `by` variable,
 #'   or one row overall if there is no `by` variable. For the `y` variable whose
@@ -240,3 +241,48 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
   
   stats::pairwise.t.test(y, x, p.adjust.method = p_adj)
 }
+
+#' Cohen's d and Hedges g effect size
+#' 
+#' This is wrapper to the [effsize::cohen.d()] function.
+#' @examples 
+#' cohen_d(weight ~ gender, data = ansur)
+#' cohen_d(age ~ gender, data = schizophrenia)
+#' @export
+cohen_d <- function(...){
+  effsize::cohen.d(...)
+}
+
+#' Show the dummy code of a categorical variable
+#' 
+#' For each value of a categorical variables, show the binary
+#' code used in a regression model to represent its value.
+#' This is wrapper to the [fastDummies::dummy_cols()] function.
+#' @examples 
+#' get_dummy_code(PlantGrowth, group)
+#' @export
+get_dummy_code <- function(Df, variable){
+  
+  var <- rlang::enquo(variable)
+  
+  tmp_df <- fastDummies::dummy_cols(Df, remove_first_dummy = TRUE)
+  tmp_df <- dplyr::select(tmp_df, dplyr::starts_with(rlang::as_label(var)))
+  dplyr::distinct(tmp_df)
+  
+}
+
+
+
+#' Analysis of variance
+#' 
+#' This is wrapper to the [ez::ezANOVA()] function.
+#' @examples 
+#' ez_anova(data = selfesteem2_long,
+#'             dv = score,
+#'             wid = id,
+#'             within = c(time, treatment),
+#'             detailed = TRUE,
+#'             return_aov = TRUE)
+#' @export
+ez_anova <- ez::ezANOVA
+
