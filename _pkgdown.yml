@@ -30,6 +30,7 @@ reference:
   - shapiro_test
   - cohen_d
   - get_dummy_code
+  - ez_anova
 - title: "Data sets"
   desc: "Included data sets."
 - contents:

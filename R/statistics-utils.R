@@ -270,3 +270,19 @@ get_dummy_code <- function(Df, variable){
   dplyr::distinct(tmp_df)
   
 }
+
+
+
+#' Analysis of variance
+#' 
+#' This is wrapper to the [ez::ezANOVA()] function.
+#' @examples 
+#' ez_anova(data = selfesteem2_long,
+#'             dv = score,
+#'             wid = id,
+#'             within = c(time, treatment),
+#'             detailed = TRUE,
+#'             return_aov = TRUE)
+#' @export
+ez_anova <- ez::ezANOVA
+
