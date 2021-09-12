@@ -8,6 +8,7 @@ reference:
   - scatterplot
   - tukeyboxplot
   - scatterplot_matrix
+  - interaction_line_plot
 - title: "Descriptive statistics"
   desc: "Functions for doing descriptive statistics."
 - contents:
