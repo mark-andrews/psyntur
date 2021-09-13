@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -159,6 +159,70 @@
   return_aov <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>Data frame containing the data to be analyzed.</p></td>
+    </tr>
+    <tr>
+      <th>dv</th>
+      <td><p>Name of the column in <code>data</code> that contains the dependent variable. Values in this column must be numeric.</p></td>
+    </tr>
+    <tr>
+      <th>wid</th>
+      <td><p>Name of the column in <code>data</code> that contains the variable specifying the case/Ss identifier. This should be a unique value per case/Ss.</p></td>
+    </tr>
+    <tr>
+      <th>within</th>
+      <td><p>Names of columns in <code>data</code> that contain predictor variables that are manipulated (or observed) within-Ss.</p></td>
+    </tr>
+    <tr>
+      <th>within_full</th>
+      <td><p>Same as within, but intended to specify the full within-Ss design in cases where the data have not already been collapsed to means per condition specified by <code>within</code> and when <code>within</code> only specifies a subset of the full design.</p></td>
+    </tr>
+    <tr>
+      <th>within_covariates</th>
+      <td><p>Names of columns in <code>data</code> that contain predictor variables that are manipulated (or observed) within-Ss and are to serve as covariates in the analysis.</p></td>
+    </tr>
+    <tr>
+      <th>between</th>
+      <td><p>Names of columns in <code>data</code> that contain predictor variables that are manipulated (or observed) between-Ss.</p></td>
+    </tr>
+    <tr>
+      <th>between_covariates</th>
+      <td><p>Names of columns in <code>data</code> that contain predictor variables that are manipulated (or observed) between-Ss and are to serve as covariates in the analysis.</p></td>
+    </tr>
+    <tr>
+      <th>observed</th>
+      <td><p>Names of columns in <code>data</code> that are already specified in either <code>within</code> or <code>between</code> that contain predictor variables that are observed variables (i.e. not manipulated).</p></td>
+    </tr>
+    <tr>
+      <th>diff</th>
+      <td><p>Names of any variables to collapse to a difference score. If a single value, may be specified by name alone; if multiple values, must be specified as a .() list.</p></td>
+    </tr>
+    <tr>
+      <th>reverse_diff</th>
+      <td><p>Logical. If TRUE, triggers reversal of the difference collapse requested by <code>diff</code>. Take care with variables with more than 2 levels.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Numeric value (either <code>1</code>, <code>2</code> or <code>3</code>) specifying the Sums of Squares type to employ when data are unbalanced (eg. when group sizes differ).</p></td>
+    </tr>
+    <tr>
+      <th>white.adjust</th>
+      <td><p>Only affects behaviour if the design contains only between-Ss predictor variables. If not FALSE, the value is passed as the white.adjust argument to Anova, which provides heteroscedasticity correction.</p></td>
+    </tr>
+    <tr>
+      <th>detailed</th>
+      <td><p>Logical. If TRUE, returns extra information (sums of squares columns, intercept row, etc.) in the ANOVA table.</p></td>
+    </tr>
+    <tr>
+      <th>return_aov</th>
+      <td><p>Logical. If TRUE, computes and returns an aov object corresponding to the requested ANOVA (useful for computing post-hoc contrasts).</p></td>
+    </tr>
+    </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
