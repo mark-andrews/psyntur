@@ -18,7 +18,7 @@ A data frame with 170 observations on the following 7 variables.
 }
 \source{
 This data set was taken from the
-\href{https://cran.r-project.org/web/packages/Stat2Data/index.html}{\code{Stats2Data}
+\href{https://cran.r-project.org/package=Stat2Data}{\code{Stats2Data}
 R package}. From the description in that package, the original is based on
 G. Rhodes et al. (2012), "Women can judge sexual unfaithfulness from
 unfamiliar men's faces," Biology Letters, November 2012. All of the 68

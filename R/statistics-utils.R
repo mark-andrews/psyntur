@@ -245,6 +245,7 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
 #' Cohen's d and Hedges g effect size
 #' 
 #' This is wrapper to the [effsize::cohen.d()] function.
+#' @param ... A comma separated list of arguments. See [effsize::cohen.d()].
 #' @examples 
 #' cohen_d(weight ~ gender, data = ansur)
 #' cohen_d(age ~ gender, data = schizophrenia)
@@ -258,6 +259,8 @@ cohen_d <- function(...){
 #' For each value of a categorical variables, show the binary
 #' code used in a regression model to represent its value.
 #' This is wrapper to the [fastDummies::dummy_cols()] function.
+#' @param Df A data frame
+#' @param variable A categorical variable (e.g. character vector or factor)
 #' @examples 
 #' get_dummy_code(PlantGrowth, group)
 #' @export
@@ -276,6 +279,21 @@ get_dummy_code <- function(Df, variable){
 #' Analysis of variance
 #' 
 #' This is wrapper to the [ez::ezANOVA()] function.
+#' @param data Data frame containing the data to be analyzed.
+#' @param dv Name of the column in `data` that contains the dependent variable. Values in this column must be numeric.
+#' @param wid Name of the column in `data` that contains the variable specifying the case/Ss identifier. This should be a unique value per case/Ss.
+#' @param within Names of columns in `data` that contain predictor variables that are manipulated (or observed) within-Ss.  
+#' @param within_full Same as within, but intended to specify the full within-Ss design in cases where the data have not already been collapsed to means per condition specified by `within` and when `within` only specifies a subset of the full design.
+#' @param within_covariates Names of columns in `data` that contain predictor variables that are manipulated (or observed) within-Ss and are to serve as covariates in the analysis.  
+#' @param between Names of columns in `data` that contain predictor variables that are manipulated (or observed) between-Ss.  
+#' @param between_covariates Names of columns in `data` that contain predictor variables that are manipulated (or observed) between-Ss and are to serve as covariates in the analysis.  
+#' @param observed Names of columns in `data` that are already specified in either `within` or `between` that contain predictor variables that are observed variables (i.e. not manipulated).  
+#' @param diff Names of any variables to collapse to a difference score. If a single value, may be specified by name alone; if multiple values, must be specified as a .() list.  
+#' @param reverse_diff Logical. If TRUE, triggers reversal of the difference collapse requested by `diff`. Take care with variables with more than 2 levels.
+#' @param type Numeric value (either `1`, `2` or `3`) specifying the Sums of Squares type to employ when data are unbalanced (eg. when group sizes differ). 
+#' @param white.adjust  Only affects behaviour if the design contains only between-Ss predictor variables. If not FALSE, the value is passed as the white.adjust argument to Anova, which provides heteroscedasticity correction.
+#' @param detailed Logical. If TRUE, returns extra information (sums of squares columns, intercept row, etc.) in the ANOVA table.
+#' @param return_aov Logical. If TRUE, computes and returns an aov object corresponding to the requested ANOVA (useful for computing post-hoc contrasts).
 #' @examples 
 #' ez_anova(data = selfesteem2_long,
 #'             dv = score,
@@ -283,6 +301,7 @@ get_dummy_code <- function(Df, variable){
 #'             within = c(time, treatment),
 #'             detailed = TRUE,
 #'             return_aov = TRUE)
+#' @importFrom ez ezANOVA             
 #' @export
 ez_anova <- ez::ezANOVA
 

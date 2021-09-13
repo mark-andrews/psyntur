@@ -18,7 +18,7 @@
 #' \item{time}{Response time (in seconds)} 
 #' }
 #' @source This data set was taken from the
-#'   \href{https://cran.r-project.org/web/packages/Stat2Data/index.html}{`Stats2Data`
+#'   \href{https://cran.r-project.org/package=Stat2Data}{`Stats2Data`
 #'   R package}. From the description in that package, the original data appear
 #'   to have been collected in a Mount Holyoke College psychology class based
 #'   replication of an experiment by Brooks, L., R. (1968) "Spatial and verbal
@@ -51,7 +51,7 @@
 #'   \item{rater_sex}{Sex of rater (female or male)} 
 #'   }
 #' @source This data set was taken from the
-#'   \href{https://cran.r-project.org/web/packages/Stat2Data/index.html}{`Stats2Data`
+#'   \href{https://cran.r-project.org/package=Stat2Data}{`Stats2Data`
 #'    R package}. From the description in that package, the original is based on
 #'   G. Rhodes et al. (2012), "Women can judge sexual unfaithfulness from
 #'   unfamiliar men's faces," Biology Letters, November 2012. All of the 68
@@ -86,7 +86,7 @@
 #'    \item{gender}{A categorical variable with values `female` and `male`}
 #' }
 #' @source This data set was taken from the
-#'   \href{https://cran.r-project.org/web/packages/HSAUR/index.html}{`HSAUR` R
+#'   \href{https://cran.r-project.org/package=HSAUR}{`HSAUR` R
 #'   package}. From the description in that package, the original is E.
 #'   Kraepelin (1919), \emph{Dementia Praecox and Paraphrenia}.  Livingstone,
 #'   Edinburgh.
@@ -130,7 +130,7 @@
 #'    \item{height_tercile}{The tercile of the person's height.}
 #'    \item{age_tercile}{The tercile of the person's weight.}
 #' }
-#' @source This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
+#' @source This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2/}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
 "ansur"
 
 #'Self-Esteem Score Data for One-way Repeated Measures ANOVA
@@ -231,3 +231,21 @@ NULL
 #' data(selfesteem2_long)
 #' selfesteem2_long
 "selfesteem2_long"
+
+
+#' Psychometrics raw data from testing or demo purposes
+#' 
+#' @description Typical psychometrics raw data files have multiple psychometric 
+#' variables (scales), each with multiple constituent items.
+#' In this data set, there are three psychometric variables, each with 10 constituent items.
+#' The variables can be labelled `x`, `y`, and `z`.
+#' The constituent items of `x`, `y` and `z` are `x_1, x_2 ... x_10`, 
+#' `y_1, y_2 ... y_10`, `z_1, z_2 ... z_10`, respectively.
+#' @name test_psychometrics
+#' @docType data
+#' @usage data('test_psychometrics')
+#' @format A data frame with 44 rows and 30 columns
+#' @examples 
+#' data(test_psychometrics)
+#' test_psychometrics
+"test_psychometrics"

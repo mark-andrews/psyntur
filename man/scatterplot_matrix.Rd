@@ -10,6 +10,10 @@ scatterplot_matrix(.data, ..., .by = NULL, .bins = 10)
 \item{.data}{A data frame}
 
 \item{...}{A comma separated list of tidyselections of columns. This can be as simple as a set of column names.}
+
+\item{.by}{An optional categorical variable by which to group and colour the points.}
+
+\item{.bins}{The number of bins in the histograms on diagonal of matrix.}
 }
 \value{
 A GGally::ggpairs plot
@@ -18,6 +22,9 @@ A GGally::ggpairs plot
 Make a scatterplot matrix
 }
 \examples{
-data_df <- test_psychometrics \%>\% total_scores(x = starts_with('x_'), y = starts_with('y_'), z = starts_with('z_'))
+data_df <- test_psychometrics \%>\%
+              total_scores(x = starts_with('x_'), 
+                           y = starts_with('y_'), 
+                           z = starts_with('z_'))
 scatterplot_matrix(data_df, x, y, z)
 }

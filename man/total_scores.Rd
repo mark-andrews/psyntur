@@ -7,6 +7,8 @@
 total_scores(.data, ..., .method = "mean", .append = FALSE)
 }
 \arguments{
+\item{.data}{A data frame with columns to summed or averaged over.}
+
 \item{...}{A comma separated set of named tidy selectors, each of which selects a set of columns to which to apply the totalling function.}
 
 \item{.method}{The method used to calculate the total. Must be one of "mean",
@@ -17,7 +19,7 @@ the arithmetic mean, again skipping missing values, multiplied by the number of 
 \item{.append}{logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.}
 }
 \value{
-
+A new data frame with columns representating the total scores.
 }
 \description{
 Calculate the total scores from sets of scores

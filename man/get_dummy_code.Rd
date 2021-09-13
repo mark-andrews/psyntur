@@ -6,6 +6,11 @@
 \usage{
 get_dummy_code(Df, variable)
 }
+\arguments{
+\item{Df}{A data frame}
+
+\item{variable}{A categorical variable (e.g. character vector or factor)}
+}
 \description{
 For each value of a categorical variables, show the binary
 code used in a regression model to represent its value.

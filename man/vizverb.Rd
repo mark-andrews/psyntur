@@ -15,7 +15,7 @@ A data frame with 80 observations on the following 5 variables.
 }
 \source{
 This data set was taken from the
-\href{https://cran.r-project.org/web/packages/Stat2Data/index.html}{\code{Stats2Data}
+\href{https://cran.r-project.org/package=Stat2Data}{\code{Stats2Data}
 R package}. From the description in that package, the original data appear
 to have been collected in a Mount Holyoke College psychology class based
 replication of an experiment by Brooks, L., R. (1968) "Spatial and verbal
