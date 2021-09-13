@@ -22,6 +22,37 @@ ez_anova(
   return_aov = FALSE
 )
 }
+\arguments{
+\item{data}{Data frame containing the data to be analyzed.}
+
+\item{dv}{Name of the column in \code{data} that contains the dependent variable. Values in this column must be numeric.}
+
+\item{wid}{Name of the column in \code{data} that contains the variable specifying the case/Ss identifier. This should be a unique value per case/Ss.}
+
+\item{within}{Names of columns in \code{data} that contain predictor variables that are manipulated (or observed) within-Ss.}
+
+\item{within_full}{Same as within, but intended to specify the full within-Ss design in cases where the data have not already been collapsed to means per condition specified by \code{within} and when \code{within} only specifies a subset of the full design.}
+
+\item{within_covariates}{Names of columns in \code{data} that contain predictor variables that are manipulated (or observed) within-Ss and are to serve as covariates in the analysis.}
+
+\item{between}{Names of columns in \code{data} that contain predictor variables that are manipulated (or observed) between-Ss.}
+
+\item{between_covariates}{Names of columns in \code{data} that contain predictor variables that are manipulated (or observed) between-Ss and are to serve as covariates in the analysis.}
+
+\item{observed}{Names of columns in \code{data} that are already specified in either \code{within} or \code{between} that contain predictor variables that are observed variables (i.e. not manipulated).}
+
+\item{diff}{Names of any variables to collapse to a difference score. If a single value, may be specified by name alone; if multiple values, must be specified as a .() list.}
+
+\item{reverse_diff}{Logical. If TRUE, triggers reversal of the difference collapse requested by \code{diff}. Take care with variables with more than 2 levels.}
+
+\item{type}{Numeric value (either \code{1}, \code{2} or \code{3}) specifying the Sums of Squares type to employ when data are unbalanced (eg. when group sizes differ).}
+
+\item{white.adjust}{Only affects behaviour if the design contains only between-Ss predictor variables. If not FALSE, the value is passed as the white.adjust argument to Anova, which provides heteroscedasticity correction.}
+
+\item{detailed}{Logical. If TRUE, returns extra information (sums of squares columns, intercept row, etc.) in the ANOVA table.}
+
+\item{return_aov}{Logical. If TRUE, computes and returns an aov object corresponding to the requested ANOVA (useful for computing post-hoc contrasts).}
+}
 \description{
 This is wrapper to the \code{\link[ez:ezANOVA]{ez::ezANOVA()}} function.
 }

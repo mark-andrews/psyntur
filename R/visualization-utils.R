@@ -397,12 +397,17 @@ pairs_plot <- function(variables, data, by = NULL){
 #'
 #' @param .data A data frame
 #' @param ... A comma separated list of tidyselections of columns. This can be as simple as a set of column names.
+#' @param .by An optional categorical variable by which to group and colour the points.
+#' @param .bins The number of bins in the histograms on diagonal of matrix.
 #'
 #' @return A GGally::ggpairs plot
 #' @export
 #'
 #' @examples
-#' data_df <- test_psychometrics %>% total_scores(x = starts_with('x_'), y = starts_with('y_'), z = starts_with('z_'))
+#' data_df <- test_psychometrics %>%
+#'               total_scores(x = starts_with('x_'), 
+#'                            y = starts_with('y_'), 
+#'                            z = starts_with('z_'))
 #' scatterplot_matrix(data_df, x, y, z)
 scatterplot_matrix <- function(.data, ..., .by = NULL, .bins = 10){
   
@@ -452,10 +457,12 @@ scatterplot_matrix <- function(.data, ..., .by = NULL, .bins = 10){
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
 #'
 #' @return A ggplot2 object
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
-#' interaction_line_plot(y = score, x = time, by = treatment, data = selfesteem2_long, ylim = c(70, 100))
+#' interaction_line_plot(y = score, x = time, by = treatment, 
+#'                       data = selfesteem2_long, ylim = c(70, 100))
 #' interaction_line_plot(y = score, x = time, by = treatment, 
 #'                       data = selfesteem2_long, 
 #'                       xlab = 'measurement time',
@@ -465,14 +472,14 @@ interaction_line_plot <- function(y, x, by, data, ylim = NULL, xlab = NULL, ylab
   
   Df <- group_by(data, {{x}}, {{by}}) %>% 
     summarise(mean = mean({{y}}),
-              sem = sd({{y}})/sqrt(length({{y}})),
+              sem = stats::sd({{y}})/sqrt(length({{y}})),
               .groups = 'drop')
   
   the_aes <- aes(x = {{ x }}, y = mean, group = {{ by }}, colour = {{ by }})
   
   p1 <- ggplot(Df, mapping = the_aes) + geom_point() + geom_line()
   
-  p1 <- p1 + geom_linerange(aes(x = {{ x }}, ymin = mean - sem, ymax = mean + sem), size = .3)
+  p1 <- p1 + geom_linerange(aes(x = {{ x }}, ymin = .data$mean - .data$sem, ymax = .data$mean + .data$sem), size = .3)
   
   if (!is.null(ylim)){
     p1 <- p1 + scale_y_continuous(limits = ylim)

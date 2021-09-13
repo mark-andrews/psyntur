@@ -13,7 +13,7 @@ A data frame with 251 observations on the following 2 variables.
 }
 \source{
 This data set was taken from the
-\href{https://cran.r-project.org/web/packages/HSAUR/index.html}{\code{HSAUR} R
+\href{https://cran.r-project.org/package=HSAUR}{\code{HSAUR} R
 package}. From the description in that package, the original is E.
 Kraepelin (1919), \emph{Dementia Praecox and Paraphrenia}.  Livingstone,
 Edinburgh.

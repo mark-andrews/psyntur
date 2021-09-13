@@ -29,7 +29,7 @@ cronbach <- function(.data, ..., .ci = 0.95){
   raw_alpha <- function(items) {
     total <- psych::alpha(items)$total
     
-    z <- qnorm(.ci + (1 - .ci)/2)
+    z <- stats::qnorm(.ci + (1 - .ci)/2)
     
     c(alpha = total$raw_alpha,
       ci_lo = total$raw_alpha - z * total$ase,
@@ -51,15 +51,14 @@ cronbach <- function(.data, ..., .ci = 0.95){
 
 #' Calculate the total scores from sets of scores
 #'
-#' @param .data
+#' @param .data A data frame with columns to summed or averaged over.
 #' @param ... A comma separated set of named tidy selectors, each of which selects a set of columns to which to apply the totalling function.
 #' @param .method The method used to calculate the total. Must be one of "mean",
 #'   "sum", or "sum_like". The "mean" is the arithmetic mean, skipping missing
 #'   values. The "sum" is the sum, skipping missing values. The "sum_like" is
 #'   the arithmetic mean, again skipping missing values, multiplied by the number of elements, including missing values.
 #' @param .append logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.
-#'
-#' @return
+#' @return A new data frame with columns representating the total scores.
 #' @export
 #'
 #' @examples

@@ -19,7 +19,7 @@ A data frame with 6068 observations from 9 variables.
 }
 }
 \source{
-This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
+This data is a transformed version of data sets obtained the \href{https://www.openlab.psu.edu/ansur2/}{Anthropometric Survey of US Army Personnel (ANSUR 2 or ANSUR II)}.
 }
 \usage{
 ansur

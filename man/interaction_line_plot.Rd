@@ -28,7 +28,8 @@ A ggplot2 object
 Make a interaction line plot
 }
 \examples{
-interaction_line_plot(y = score, x = time, by = treatment, data = selfesteem2_long, ylim = c(70, 100))
+interaction_line_plot(y = score, x = time, by = treatment, 
+                      data = selfesteem2_long, ylim = c(70, 100))
 interaction_line_plot(y = score, x = time, by = treatment, 
                       data = selfesteem2_long, 
                       xlab = 'measurement time',
