@@ -289,9 +289,6 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
 #'   commands.
 #' @examples
 #' densityplot(x = age, data = schizophrenia, by = gender)
-#' densityplot(x = age, data = schizophrenia, by = gender, position = 'identity', alpha = 0.7)
-#' densityplot(x = weight, data = ansur, facet = height_tercile)
-#' densityplot(x = weight, data = ansur, facet = c(height_tercile, age_tercile), facet_type = 'grid')
 #' @import ggplot2 dplyr
 #' @export
 densityplot <- function(x, data, by = NULL, position = 'stack', facet = NULL, facet_type = 'wrap', alpha = 1.0, xlab = NULL, ylab = NULL){

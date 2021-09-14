@@ -56,7 +56,4 @@ Optionally, a \code{by} categorical variable can be provided.
 }
 \examples{
 densityplot(x = age, data = schizophrenia, by = gender)
-densityplot(x = age, data = schizophrenia, by = gender, position = 'identity', alpha = 0.7)
-densityplot(x = weight, data = ansur, facet = height_tercile)
-densityplot(x = weight, data = ansur, facet = c(height_tercile, age_tercile), facet_type = 'grid')
 }
