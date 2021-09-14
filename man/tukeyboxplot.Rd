@@ -41,7 +41,7 @@ box.}
 \item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \value{
-A \code{ggplot} object, which may be modified with further \code{ggplot2}
+A \code{ggplot2::ggplot} object, which may be modified with further \code{ggplot2}
 commands.
 }
 \description{

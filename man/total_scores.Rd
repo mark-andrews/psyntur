@@ -19,7 +19,7 @@ the arithmetic mean, again skipping missing values, multiplied by the number of 
 \item{.append}{logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.}
 }
 \value{
-A new data frame with columns representating the total scores.
+A new data frame with columns representing the total scores.
 }
 \description{
 Calculate the total scores from sets of scores

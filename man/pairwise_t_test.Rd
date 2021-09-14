@@ -17,6 +17,9 @@ variables.}
 
 \item{p_adj}{The p-value adjustment method (see Description).}
 }
+\value{
+An object of class \code{pairwise.htest} as returned by \code{\link[stats:pairwise.t.test]{stats::pairwise.t.test()}}.
+}
 \description{
 This is wrapper to the \code{pairwise.t.test} function. The p-value adjustment is
 "bonferroni" by default. Other possible values are "holm", "hochberg",

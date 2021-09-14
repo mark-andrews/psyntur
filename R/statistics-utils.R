@@ -47,6 +47,7 @@ shapiro_test <- function(y, by = NULL, data){
 #'   factor variable in `data`, and which has only two distinct values.
 #' @param data A data frame that contains the dependent and independent
 #'   variables.
+#' @return A list with class "htest" as returned by [stats::t.test()].
 #'   
 #' @examples 
 #' t_test(trustworthy ~ face_sex, data = faithfulfaces)
@@ -119,6 +120,7 @@ t_test <- function(formula, data) {
 #' be paired, such as by repeated measures, the corresponding value of y1.
 #' @param data A data frame with `y1` and `y2` as values.
 #' @param ... Additional arguments passed to [stats::t.test()].
+#' @return A list with class "htest" as returned by [stats::t.test()].
 #' 
 #' @examples 
 #' paired_t_test(y1, y2, data = pairedsleep)
@@ -187,6 +189,7 @@ paired_t_test <- function(y1, y2, data, ...){
 #' @param data A data frame that contains the dependent and independent
 #'   variables.
 #' @param p_adj The p-value adjustment method (see Description).
+#' @return An object of class `pairwise.htest` as returned by [stats::pairwise.t.test()].
 #' 
 #' @examples 
 #' data_df <- dplyr::mutate(vizverb, IV = interaction(task, response))
@@ -246,6 +249,7 @@ pairwise_t_test <- function(formula, data, p_adj = 'bonferroni'){
 #' 
 #' This is wrapper to the [effsize::cohen.d()] function.
 #' @param ... A comma separated list of arguments. See [effsize::cohen.d()].
+#' @return A list of class `effsize` as returned by [effsize::cohen.d()].
 #' @examples 
 #' cohen_d(weight ~ gender, data = ansur)
 #' cohen_d(age ~ gender, data = schizophrenia)
@@ -260,7 +264,9 @@ cohen_d <- function(...){
 #' code used in a regression model to represent its value.
 #' This is wrapper to the [fastDummies::dummy_cols()] function.
 #' @param Df A data frame
-#' @param variable A categorical variable (e.g. character vector or factor)
+#' @param variable A categorical variable (e.g. character vector or factor).
+#' @return A data frame whose rows provide the dummy code for 
+#'    each distinct value of `variable`.
 #' @examples 
 #' get_dummy_code(PlantGrowth, group)
 #' @export
@@ -294,6 +300,7 @@ get_dummy_code <- function(Df, variable){
 #' @param white.adjust  Only affects behaviour if the design contains only between-Ss predictor variables. If not FALSE, the value is passed as the white.adjust argument to Anova, which provides heteroscedasticity correction.
 #' @param detailed Logical. If TRUE, returns extra information (sums of squares columns, intercept row, etc.) in the ANOVA table.
 #' @param return_aov Logical. If TRUE, computes and returns an aov object corresponding to the requested ANOVA (useful for computing post-hoc contrasts).
+#' @return A list containing one or more components as returned by [ez::ezANOVA()].
 #' @examples 
 #' ez_anova(data = selfesteem2_long,
 #'             dv = score,

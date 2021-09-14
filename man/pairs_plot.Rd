@@ -15,8 +15,7 @@ pairs_plot(variables, data, by = NULL)
 which the data are grouped and coloured.}
 }
 \value{
-A \code{ggplot} object, which may be modified with further \code{ggplot2}
-commands.
+A \code{GGally::ggpairs} plot.
 }
 \description{
 This is a wrapper to the \code{GGally} based pairs plot of a list of variables

@@ -22,7 +22,8 @@ interaction_line_plot(y, x, by, data, ylim = NULL, xlab = NULL, ylab = NULL)
 \item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
 \value{
-A ggplot2 object
+A \code{ggplot2::ggplot} object, which may be modified with further \code{ggplot2}
+commands.
 }
 \description{
 Make a interaction line plot

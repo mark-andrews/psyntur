@@ -58,7 +58,7 @@ cronbach <- function(.data, ..., .ci = 0.95){
 #'   values. The "sum" is the sum, skipping missing values. The "sum_like" is
 #'   the arithmetic mean, again skipping missing values, multiplied by the number of elements, including missing values.
 #' @param .append logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.
-#' @return A new data frame with columns representating the total scores.
+#' @return A new data frame with columns representing the total scores.
 #' @export
 #'
 #' @examples
@@ -104,7 +104,7 @@ total_scores <- function(.data, ..., .method = 'mean', .append = FALSE){
 #' @param from The set of old values to be replaced by new ones
 #' @param to The set of new values to replace the old ones
 #'
-#' @return A vector that is the original vector but with old values replaced by new ones
+#' @return A vector that is the input vector but with old values replaced by new ones.
 #' @export
 #'
 #' @examples

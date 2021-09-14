@@ -19,6 +19,8 @@
 #'   should shown or not.
 #' @param xlab The label of the x-axis (defaults to the `x` variable name).
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
+#' @return A `ggplot2::ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
 #' @examples 
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces)
 #' scatterplot(x = attractive, y = trustworthy, data = faithfulfaces,
@@ -85,7 +87,7 @@ scatterplot <- function(x, y, data, by = NULL, best_fit_line = FALSE, xlab = NUL
 #'   box.
 #' @param xlab The label of the x-axis (defaults to the `x` variable name).
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
-#' @return A `ggplot` object, which may be modified with further `ggplot2`
+#' @return A `ggplot2::ggplot` object, which may be modified with further `ggplot2`
 #'   commands.
 #' @examples
 #' # A single box-and-whisker plot
@@ -193,6 +195,8 @@ tukeyboxplot <- function(y, x, data,
 #'   probably only required when using `position = 'identity'`.
 #' @param xlab The label of the x-axis (defaults to the `x` variable name).
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
+#' @return A `ggplot2::ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
 #' @examples
 #' histogram(x= age, data = schizophrenia, by = gender, bins = 20)
 #' histogram(x= age, data = schizophrenia, by = gender, position = 'identity', bins = 20, alpha = 0.7)
@@ -281,6 +285,8 @@ histogram <- function(x, data, by = NULL, position = 'stack', facet = NULL, face
 #'   probably only required when using `position = 'identity'`.
 #' @param xlab The label of the x-axis (defaults to the `x` variable name).
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
+#' @return A `ggplot2::ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
 #' @examples
 #' densityplot(x = age, data = schizophrenia, by = gender)
 #' densityplot(x = age, data = schizophrenia, by = gender, position = 'identity', alpha = 0.7)
@@ -352,8 +358,7 @@ densityplot <- function(x, data, by = NULL, position = 'stack', facet = NULL, fa
 #' @param data The data frame.
 #' @param by An optional variable, usually categorical (factor or character), by
 #'   which the data are grouped and coloured.
-#' @return A `ggplot` object, which may be modified with further `ggplot2`
-#'   commands.
+#' @return A `GGally::ggpairs` plot.
 #' @examples
 #' # A simple pairs plot
 #' pairs_plot(variables = c("sex_dimorph", "attractive"),
@@ -400,7 +405,7 @@ pairs_plot <- function(variables, data, by = NULL){
 #' @param .by An optional categorical variable by which to group and colour the points.
 #' @param .bins The number of bins in the histograms on diagonal of matrix.
 #'
-#' @return A GGally::ggpairs plot
+#' @return A `GGally::ggpairs` plot.
 #' @export
 #'
 #' @examples
@@ -456,7 +461,8 @@ scatterplot_matrix <- function(.data, ..., .by = NULL, .bins = 10){
 #' @param xlab The label of the x-axis (defaults to the `x` variable name).
 #' @param ylab The label of the y-axis (defaults to the `y` variable name).
 #'
-#' @return A ggplot2 object
+#' @return A `ggplot2::ggplot` object, which may be modified with further `ggplot2`
+#'   commands.
 #' @importFrom rlang .data
 #' @export
 #'

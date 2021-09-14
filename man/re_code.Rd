@@ -14,7 +14,7 @@ re_code(x, from, to)
 \item{to}{The set of new values to replace the old ones}
 }
 \value{
-A vector that is the original vector but with old values replaced by new ones
+A vector that is the input vector but with old values replaced by new ones.
 }
 \description{
 Recode specified values by new values

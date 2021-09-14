@@ -16,7 +16,7 @@ scatterplot_matrix(.data, ..., .by = NULL, .bins = 10)
 \item{.bins}{The number of bins in the histograms on diagonal of matrix.}
 }
 \value{
-A GGally::ggpairs plot
+A \code{GGally::ggpairs} plot.
 }
 \description{
 Make a scatterplot matrix
