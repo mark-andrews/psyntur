@@ -16,6 +16,9 @@ be paired, such as by repeated measures, the corresponding value of y1.}
 
 \item{...}{Additional arguments passed to \code{\link[stats:t.test]{stats::t.test()}}.}
 }
+\value{
+A list with class "htest" as returned by \code{\link[stats:t.test]{stats::t.test()}}.
+}
 \description{
 A wrapper to \code{\link[stats:t.test]{stats::t.test()}} with \code{paired = TRUE}.
 }

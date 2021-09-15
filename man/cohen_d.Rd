@@ -9,6 +9,9 @@ cohen_d(...)
 \arguments{
 \item{...}{A comma separated list of arguments. See \code{\link[effsize:cohen.d]{effsize::cohen.d()}}.}
 }
+\value{
+A list of class \code{effsize} as returned by \code{\link[effsize:cohen.d]{effsize::cohen.d()}}.
+}
 \description{
 This is wrapper to the \code{\link[effsize:cohen.d]{effsize::cohen.d()}} function.
 }

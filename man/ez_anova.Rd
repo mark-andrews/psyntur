@@ -53,6 +53,9 @@ ez_anova(
 
 \item{return_aov}{Logical. If TRUE, computes and returns an aov object corresponding to the requested ANOVA (useful for computing post-hoc contrasts).}
 }
+\value{
+A list containing one or more components as returned by \code{\link[ez:ezANOVA]{ez::ezANOVA()}}.
+}
 \description{
 This is wrapper to the \code{\link[ez:ezANOVA]{ez::ezANOVA()}} function.
 }

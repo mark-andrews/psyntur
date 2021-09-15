@@ -9,7 +9,11 @@ get_dummy_code(Df, variable)
 \arguments{
 \item{Df}{A data frame}
 
-\item{variable}{A categorical variable (e.g. character vector or factor)}
+\item{variable}{A categorical variable (e.g. character vector or factor).}
+}
+\value{
+A data frame whose rows provide the dummy code for
+each distinct value of \code{variable}.
 }
 \description{
 For each value of a categorical variables, show the binary

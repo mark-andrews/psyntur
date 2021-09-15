@@ -24,6 +24,11 @@ var_xna(...)
 \arguments{
 \item{...}{Arguments to a descriptive statistic function}
 }
+\value{
+A numeric vector, usually with one element, that provides the result
+of a descriptive statistics function applied to a vector after the \code{NA}
+values have been removed.
+}
 \description{
 Most descriptive statistic function like \code{\link[base:sum]{base::sum()}}, \code{\link[base:mean]{base::mean()}},
 \code{\link[stats:median]{stats::median()}}, etc., do not skip \code{NA} values when computing the results

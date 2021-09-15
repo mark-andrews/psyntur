@@ -15,6 +15,9 @@ factor variable in \code{data}, and which has only two distinct values.}
 \item{data}{A data frame that contains the dependent and independent
 variables.}
 }
+\value{
+A list with class "htest" as returned by \code{\link[stats:t.test]{stats::t.test()}}.
+}
 \description{
 A wrapper to \code{\link[stats:t.test]{stats::t.test()}} with \code{var.equal = TRUE}.
 }

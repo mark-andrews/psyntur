@@ -45,6 +45,10 @@ probably only required when using \code{position = 'identity'}.}
 
 \item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
+\value{
+A \code{ggplot2::ggplot} object, which may be modified with further \code{ggplot2}
+commands.
+}
 \description{
 This is a wrapper to the typical \code{ggplot} based density plot, i.e., using
 \code{geom_density}. A continuous variable, \code{x}, is required as an input.
@@ -52,7 +56,4 @@ Optionally, a \code{by} categorical variable can be provided.
 }
 \examples{
 densityplot(x = age, data = schizophrenia, by = gender)
-densityplot(x = age, data = schizophrenia, by = gender, position = 'identity', alpha = 0.7)
-densityplot(x = weight, data = ansur, facet = height_tercile)
-densityplot(x = weight, data = ansur, facet = c(height_tercile, age_tercile), facet_type = 'grid')
 }

@@ -15,7 +15,8 @@
 #' `by` variable before the summary statistics are applied.
 #' @param ... Arguments of functions applied to variables, e.g. `avg = mean(x)`.
 #' 
-#' @return A tibble data frame.
+#' @return A tibble data frame with each row providing descriptive statistics 
+#'  for selected variables for each value of the grouping `by` variable.
 #' 
 #' @import dplyr
 #' @export 
@@ -103,6 +104,9 @@ describe_across <- function(data, variables, functions, by = NULL, pivot = FALSE
 #' 
 #'
 #' @param ... Arguments to a descriptive statistic function
+#' @return A numeric vector, usually with one element, that provides the result
+#'  of a descriptive statistics function applied to a vector after the `NA` 
+#'  values have been removed.
 #' 
 #' @examples 
 #' set.seed(10101)

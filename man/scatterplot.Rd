@@ -32,6 +32,10 @@ should shown or not.}
 
 \item{ylab}{The label of the y-axis (defaults to the \code{y} variable name).}
 }
+\value{
+A \code{ggplot2::ggplot} object, which may be modified with further \code{ggplot2}
+commands.
+}
 \description{
 This function is a wrapper around the typical \code{ggplot} command to create two
 dimensional scatterplots, i.e. using \code{geom_point}. It provides the option of

@@ -15,7 +15,8 @@ describe(data, by = NULL, ...)
 \item{...}{Arguments of functions applied to variables, e.g. \code{avg = mean(x)}.}
 }
 \value{
-A tibble data frame.
+A tibble data frame with each row providing descriptive statistics
+for selected variables for each value of the grouping \code{by} variable.
 }
 \description{
 This function is a lightweight wrapper to \code{dplyr}'s \code{summarize} function.
