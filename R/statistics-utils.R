@@ -37,6 +37,43 @@ shapiro_test <- function(y, by = NULL, data){
  
 }
 
+
+
+#' Test for Correlation Between Paired Samples
+#' 
+#' This function is a wrapper around [stats::cor.test()]. 
+#' It implements the Pearson's correlation test that tests the null hypothesis 
+#' that two paired samples of values are unrelated.
+#' This function must be applied to two numeric vectors.
+#' 
+#' @return A tibble data frame with the correlation statistic, and the corresponding p-value.
+
+#' @param x A numeric variable.
+#' @param y A numeric variable.
+#' @param data A data frame containing the `y` and `x` variables
+#' @param method 	A character string indicating which correlation 
+#' coefficient is to be used: "pearson", "kendall", or "spearman". Default option is "pearson".
+#' @examples 
+#' cor_test(y = sex_dimorph, x = attractive, data = faithfulfaces)
+#' cor_test(y = sex_dimorph, x = attractive, method = "spearman", data = faithfulfaces)
+#' @import dplyr
+#' @export
+cor_test <- function(x, y, method = "pearson", data){
+  
+  get_cor_test_results <- function(x, y, method){
+    results <- stats::cor.test(x, y, method = method)
+    dplyr::tibble(cor = results$estimate, 
+                  t = results$statistic, 
+                  df = results$parameter,  
+                  p_value = results$p.value)
+  }
+  
+  results <- dplyr::summarise(data, get_cor_test_results({{x}}, {{y}}, {{method}}))
+  
+  results
+  
+}
+
 #' Independent samples t-test
 #' 
 #' A wrapper to [stats::t.test()] with `var.equal = TRUE`.
