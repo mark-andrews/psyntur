@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="exploration_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><script src="exploration_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simple data exploration</h1>
@@ -165,9 +165,9 @@
                 functions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="va">mean</span>, median <span class="op">=</span> <span class="va">median</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 × 6</span>
-<span class="co">#&gt;   trustworthy_avg trustworthy_median trustworthy_stdev faithful_avg faithful_median</span>
-<span class="co">#&gt;             &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1            4.32               4.24             0.791         5.14            5.24</span>
+<span class="co">#&gt;   trustworthy_avg trustworthy_med… trustworthy_std… faithful_avg faithful_median</span>
+<span class="co">#&gt;             &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt; 1            4.32             4.24            0.791         5.14            5.24</span>
 <span class="co">#&gt; # … with 1 more variable: faithful_stdev &lt;dbl&gt;</span></code></pre></div>
 <p>Note that the data frame that is returned is in a wide format. We can pivot this to a longer format by saying <code>pivot = TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -204,7 +204,7 @@
 </h1>
 <p>When variable have <code>NA</code> values, most summary statistics function will, by default, return <code>NA</code>. To illustrate this, we can modify <code>faithfulfaces</code> to contain <code>NA</code>’s for the <code>faithful</code> variable.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">faithfulfaces_na</span> <span class="op">&lt;-</span> <span class="va">faithfulfaces</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">faithfulfaces_na</span> <span class="op">&lt;-</span> <span class="va">faithfulfaces</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>faithful <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">faithful</span> <span class="op">&gt;</span> <span class="fl">6</span>, <span class="cn">NA</span>, <span class="va">faithful</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now, if we try one of the above <code>describe</code> or <code>describe_aross</code> functions with the <code>faithful</code> variable, we will obtain corresponding <code>NA</code> values.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">

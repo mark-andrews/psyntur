@@ -82,7 +82,7 @@ of items is defined by a tidy selection of a set of items." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -173,18 +173,19 @@ we have the Cronbach's alpha, and the lower and upper bound of the
 confidence interval on alpha.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='co'># Return the Cronbach alpha and 95% ci for two scales.</span>
- <span class='co'># The first scale, named `x`, is identified by all items beginning with `x_`.</span>
- <span class='co'># The second scale, named `y`, is identified by the consecutive items from `y_1` to `y_10`.</span>
- <span class='fu'>cronbach</span><span class='op'>(</span><span class='va'>test_psychometrics</span>,
-          x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x'</span><span class='op'>)</span>,
-          y <span class='op'>=</span> <span class='va'>y_1</span><span class='op'>:</span><span class='va'>y_10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 4</span>
-#&gt;   scale alpha ci_lo ci_hi
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> x     0.620 0.452 0.788
-#&gt; <span style='color: #BCBCBC;'>2</span> y     0.738 0.626 0.850</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'> <span class='co'># Return the Cronbach alpha and 95% ci for two scales.</span></span>
+<span class='r-in'> <span class='co'># The first scale, named `x`, is identified by all items beginning with `x_`.</span></span>
+<span class='r-in'> <span class='co'># The second scale, named `y`, is identified by the consecutive items from `y_1` to `y_10`.</span></span>
+<span class='r-in'> <span class='fu'>cronbach</span><span class='op'>(</span><span class='va'>test_psychometrics</span>,</span>
+<span class='r-in'>          x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x'</span><span class='op'>)</span>,</span>
+<span class='r-in'>          y <span class='op'>=</span> <span class='va'>y_1</span><span class='op'>:</span><span class='va'>y_10</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   scale alpha ci_lo ci_hi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> x     0.620 0.452 0.788</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> y     0.738 0.626 0.850</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

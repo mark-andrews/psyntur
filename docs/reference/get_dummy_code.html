@@ -82,7 +82,7 @@ This is wrapper to the fastDummies::dummy_cols() function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -166,11 +166,12 @@ This is wrapper to the <code><a href='https://jacobkap.github.io/fastDummies/ref
 each distinct value of <code>variable</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_dummy_code</span><span class='op'>(</span><span class='va'>PlantGrowth</span>, <span class='va'>group</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   group group_trt1 group_trt2
-#&gt; 1  ctrl          0          0
-#&gt; 2  trt1          1          0
-#&gt; 3  trt2          0          1</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>get_dummy_code</span><span class='op'>(</span><span class='va'>PlantGrowth</span>, <span class='va'>group</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   group group_trt1 group_trt2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  ctrl          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  trt1          1          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  trt2          0          1</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -85,7 +85,7 @@ wide format, can be pivoted to a long format." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -190,34 +190,37 @@ if there is no <code>by</code> variable, or <code>k</code> + 2 columns if there 
 where <code>k</code> is the number of functions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, 
-                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, 
-                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>,
-                pivot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 3</span>
-#&gt;   variable      avg stdev
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> trustworthy  4.32 0.791
-#&gt; <span style='color: #BCBCBC;'>2</span> faithful     5.14 0.957</div><div class='input'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, 
-                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, 
-                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>, 
-                by <span class='op'>=</span> <span class='va'>face_sex</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 5</span>
-#&gt;   face_sex trustworthy_avg trustworthy_stdev faithful_avg faithful_stdev
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> female              4.44             0.742         5.55          0.802
-#&gt; <span style='color: #BCBCBC;'>2</span> male                4.21             0.822         4.75          0.932</div><div class='input'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, 
-                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, 
-                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>, 
-                by <span class='op'>=</span> <span class='va'>face_sex</span>,
-                pivot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 × 4</span>
-#&gt;   face_sex variable      avg stdev
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> female   trustworthy  4.44 0.742
-#&gt; <span style='color: #BCBCBC;'>2</span> female   faithful     5.55 0.802
-#&gt; <span style='color: #BCBCBC;'>3</span> male     trustworthy  4.21 0.822
-#&gt; <span style='color: #BCBCBC;'>4</span> male     faithful     4.75 0.932</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, </span>
+<span class='r-in'>                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, </span>
+<span class='r-in'>                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>,</span>
+<span class='r-in'>                pivot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   variable      avg stdev</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> trustworthy  4.32 0.791</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> faithful     5.14 0.957</span>
+<span class='r-in'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, </span>
+<span class='r-in'>                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, </span>
+<span class='r-in'>                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>, </span>
+<span class='r-in'>                by <span class='op'>=</span> <span class='va'>face_sex</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   face_sex trustworthy_avg trustworthy_stdev faithful_avg faithful_stdev</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> female              4.44             0.742         5.55          0.802</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> male                4.21             0.822         4.75          0.932</span>
+<span class='r-in'><span class='fu'>describe_across</span><span class='op'>(</span><span class='va'>faithfulfaces</span>, </span>
+<span class='r-in'>                variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>trustworthy</span>, <span class='va'>faithful</span><span class='op'>)</span>, </span>
+<span class='r-in'>                functions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>avg <span class='op'>=</span> <span class='va'>mean</span>, stdev <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span>, </span>
+<span class='r-in'>                by <span class='op'>=</span> <span class='va'>face_sex</span>,</span>
+<span class='r-in'>                pivot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 4 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   face_sex variable      avg stdev</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> female   trustworthy  4.44 0.742</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> female   faithful     5.55 0.802</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> male     trustworthy  4.21 0.822</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> male     faithful     4.75 0.932</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

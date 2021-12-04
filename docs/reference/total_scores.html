@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
     <p>Calculate the total scores from sets of scores</p>
     </div>
 
-    <pre class="usage"><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .method <span class='op'>=</span> <span class='st'>"mean"</span>, .append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .method <span class='op'>=</span> <span class='st'>"mean"</span>, .append <span class='op'>=</span> <span class='cn'>FALSE</span>, .drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +165,10 @@ the arithmetic mean, again skipping missing values, multiplied by the number of 
       <th>.append</th>
       <td><p>logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.</p></td>
     </tr>
+    <tr>
+      <th>.drop</th>
+      <td><p>logical If .append is TRUE, and if .drop is TRUE, then the variables being aggregated over are not returned.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -172,52 +176,73 @@ the arithmetic mean, again skipping missing values, multiplied by the number of 
     <p>A new data frame with columns representing the total scores.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`</span>
-<span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x'</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'y'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 44 × 2</span>
-#&gt;        x     y
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>  2     2   
-#&gt; <span style='color: #BCBCBC;'> 2</span>  1.8   1.8 
-#&gt; <span style='color: #BCBCBC;'> 3</span>  2.1   2.8 
-#&gt; <span style='color: #BCBCBC;'> 4</span>  1.78  2.3 
-#&gt; <span style='color: #BCBCBC;'> 5</span>  1.1   1.6 
-#&gt; <span style='color: #BCBCBC;'> 6</span>  1.6   2.11
-#&gt; <span style='color: #BCBCBC;'> 7</span>  2.5   3.2 
-#&gt; <span style='color: #BCBCBC;'> 8</span>  1.8   2.3 
-#&gt; <span style='color: #BCBCBC;'> 9</span>  1.5   2.2 
-#&gt; <span style='color: #BCBCBC;'>10</span>  1.5   1.8 
-#&gt; <span style='color: #949494;'># … with 34 more rows</span></div><div class='input'><span class='co'># Calculate the sum of all items beginning with `z_` and separately all items beginning with `x_`</span>
-<span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, .method <span class='op'>=</span> <span class='st'>'sum'</span>, z <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'z'</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x_'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 44 × 2</span>
-#&gt;        z     x
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>    22    20
-#&gt; <span style='color: #BCBCBC;'> 2</span>    17    18
-#&gt; <span style='color: #BCBCBC;'> 3</span>    17    21
-#&gt; <span style='color: #BCBCBC;'> 4</span>    30    16
-#&gt; <span style='color: #BCBCBC;'> 5</span>    33    11
-#&gt; <span style='color: #BCBCBC;'> 6</span>    27    16
-#&gt; <span style='color: #BCBCBC;'> 7</span>    19    25
-#&gt; <span style='color: #BCBCBC;'> 8</span>    17    18
-#&gt; <span style='color: #BCBCBC;'> 9</span>    30    15
-#&gt; <span style='color: #BCBCBC;'>10</span>    23    15
-#&gt; <span style='color: #949494;'># … with 34 more rows</span></div><div class='input'><span class='co'># Calculate the mean of all items from `x_1` to `y_10`</span>
-<span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, xy <span class='op'>=</span> <span class='va'>x_1</span><span class='op'>:</span><span class='va'>y_10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 44 × 1</span>
-#&gt;       xy
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span>  2   
-#&gt; <span style='color: #BCBCBC;'> 2</span>  1.8 
-#&gt; <span style='color: #BCBCBC;'> 3</span>  2.45
-#&gt; <span style='color: #BCBCBC;'> 4</span>  2.05
-#&gt; <span style='color: #BCBCBC;'> 5</span>  1.35
-#&gt; <span style='color: #BCBCBC;'> 6</span>  1.84
-#&gt; <span style='color: #BCBCBC;'> 7</span>  2.85
-#&gt; <span style='color: #BCBCBC;'> 8</span>  2.05
-#&gt; <span style='color: #BCBCBC;'> 9</span>  1.85
-#&gt; <span style='color: #BCBCBC;'>10</span>  1.65
-#&gt; <span style='color: #949494;'># … with 34 more rows</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`</span></span>
+<span class='r-in'><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x_'</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'y_'</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 × 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x     y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>  2     2   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>  1.8   1.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>  2.1   2.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>  1.78  2.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>  1.1   1.6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>  1.6   2.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>  2.5   3.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>  1.8   2.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>  1.5   2.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>  1.5   1.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 34 more rows</span></span>
+<span class='r-in'><span class='co'># Calculate the sum of all items beginning with `z_` and separately all items beginning with `x_`</span></span>
+<span class='r-in'><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, .method <span class='op'>=</span> <span class='st'>'sum'</span>, z <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'z_'</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x_'</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 × 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        z     x</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>    22    20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>    17    18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>    17    21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>    30    16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>    33    11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>    27    16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>    19    25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>    17    18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>    30    15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>    23    15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 34 more rows</span></span>
+<span class='r-in'><span class='co'># Calculate the mean of all items from `x_1` to `y_10`</span></span>
+<span class='r-in'><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, xy <span class='op'>=</span> <span class='va'>x_1</span><span class='op'>:</span><span class='va'>y_10</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 × 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       xy</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>  2   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>  1.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>  2.45</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>  2.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>  1.35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>  1.84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>  2.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>  2.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>  1.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>  1.65</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 34 more rows</span></span>
+<span class='r-in'><span class='co'># Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`,</span></span>
+<span class='r-in'><span class='co'># but append these means to the original, after have dropping the variables that</span></span>
+<span class='r-in'><span class='co'># are aggregated over</span></span>
+<span class='r-in'><span class='fu'>total_scores</span><span class='op'>(</span><span class='va'>test_psychometrics</span>, x <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'x_'</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'y_'</span><span class='op'>)</span>, .append <span class='op'>=</span> <span class='cn'>T</span>, .drop <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 44 × 12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      z_1   z_2   z_3   z_4   z_5   z_6   z_7   z_8   z_9  z_10     x     y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     2     2     3     3     1     2     3     3     1     2  2     2   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     1     1     1     2     1     2     2     2     4     1  1.8   1.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     1    <span style='color: #BB0000;'>NA</span>     2     2     3     2     2     1     2     2  2.1   2.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     2     3     3     5     4     4     2     2     2     3  1.78  2.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     4     4     4     3     3     3     3     5     3     1  1.1   1.6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     3     2     2     3     3     2     4     4     3     1  1.6   2.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     2     2     1     1     2     2     1     3     2     3  2.5   3.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     3     1     1     1     1     2     1     1     2     4  1.8   2.3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     2     3     3     3     3     3     4     2     4     3  1.5   2.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     3     3     1     2     3     1     2     2     3     3  1.5   1.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 34 more rows</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

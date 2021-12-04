@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -229,85 +229,87 @@
     <p>A list containing one or more components as returned by <code><a href='https://rdrr.io/pkg/ez/man/ezANOVA.html'>ez::ezANOVA()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>ez_anova</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>selfesteem2_long</span>,
-            dv <span class='op'>=</span> <span class='va'>score</span>,
-            wid <span class='op'>=</span> <span class='va'>id</span>,
-            within <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>treatment</span><span class='op'>)</span>,
-            detailed <span class='op'>=</span> <span class='cn'>TRUE</span>,
-            return_aov <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Converting "time" to factor for ANOVA.</span></div><div class='output co'>#&gt; $ANOVA
-#&gt;           Effect DFn DFd         SSn        SSd          F            p p&lt;.05
-#&gt; 1    (Intercept)   1  11 527535.6806 4641.15278 1250.31275 1.112064e-12     *
-#&gt; 2           time   2  22    258.6944  103.97222   27.36922 1.075243e-06     *
-#&gt; 3      treatment   1  11    316.6806  224.15278   15.54068 2.303450e-03     *
-#&gt; 4 time:treatment   2  22    266.3611   96.30556   30.42371 4.629997e-07     *
-#&gt;          ges
-#&gt; 1 0.99048898
-#&gt; 2 0.04858771
-#&gt; 3 0.05883780
-#&gt; 4 0.04995572
-#&gt; 
-#&gt; $`Mauchly's Test for Sphericity`
-#&gt;           Effect         W          p p&lt;.05
-#&gt; 2           time 0.4690776 0.02271033     *
-#&gt; 4 time:treatment 0.6160746 0.08874965      
-#&gt; 
-#&gt; $`Sphericity Corrections`
-#&gt;           Effect       GGe        p[GG] p[GG]&lt;.05       HFe        p[HF]
-#&gt; 2           time 0.6532010 5.033982e-05         * 0.7054565 2.810626e-05
-#&gt; 4 time:treatment 0.7225823 1.254728e-05         * 0.8028383 4.815620e-06
-#&gt;   p[HF]&lt;.05
-#&gt; 2         *
-#&gt; 4         *
-#&gt; 
-#&gt; $aov
-#&gt; 
-#&gt; Call:
-#&gt; aov(formula = formula(aov_formula), data = data)
-#&gt; 
-#&gt; Grand Mean: 85.59722
-#&gt; 
-#&gt; Stratum 1: id
-#&gt; 
-#&gt; Terms:
-#&gt;                 Residuals
-#&gt; Sum of Squares   4641.153
-#&gt; Deg. of Freedom        11
-#&gt; 
-#&gt; Residual standard error: 20.54076
-#&gt; 
-#&gt; Stratum 2: id:time
-#&gt; 
-#&gt; Terms:
-#&gt;                     time Residuals
-#&gt; Sum of Squares  258.6944  103.9722
-#&gt; Deg. of Freedom        2        22
-#&gt; 
-#&gt; Residual standard error: 2.173939
-#&gt; 2 out of 4 effects not estimable
-#&gt; Estimated effects may be unbalanced
-#&gt; 
-#&gt; Stratum 3: id:treatment
-#&gt; 
-#&gt; Terms:
-#&gt;                 treatment Residuals
-#&gt; Sum of Squares   316.6806  224.1528
-#&gt; Deg. of Freedom         1        11
-#&gt; 
-#&gt; Residual standard error: 4.514147
-#&gt; 2 out of 3 effects not estimable
-#&gt; Estimated effects are balanced
-#&gt; 
-#&gt; Stratum 4: id:time:treatment
-#&gt; 
-#&gt; Terms:
-#&gt;                 time:treatment Residuals
-#&gt; Sum of Squares       266.36111  96.30556
-#&gt; Deg. of Freedom              2        22
-#&gt; 
-#&gt; Residual standard error: 2.092254
-#&gt; Estimated effects may be unbalanced
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>ez_anova</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>selfesteem2_long</span>,</span>
+<span class='r-in'>            dv <span class='op'>=</span> <span class='va'>score</span>,</span>
+<span class='r-in'>            wid <span class='op'>=</span> <span class='va'>id</span>,</span>
+<span class='r-in'>            within <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>treatment</span><span class='op'>)</span>,</span>
+<span class='r-in'>            detailed <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>            return_aov <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Converting "time" to factor for ANOVA.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ANOVA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Effect DFn DFd         SSn        SSd          F            p p&lt;.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    (Intercept)   1  11 527535.6806 4641.15278 1250.31275 1.112064e-12     *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           time   2  22    258.6944  103.97222   27.36922 1.075243e-06     *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      treatment   1  11    316.6806  224.15278   15.54068 2.303450e-03     *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 time:treatment   2  22    266.3611   96.30556   30.42371 4.629997e-07     *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          ges</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 0.99048898</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 0.04858771</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 0.05883780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 0.04995572</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`Mauchly's Test for Sphericity`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Effect         W          p p&lt;.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           time 0.4690776 0.02271033     *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 time:treatment 0.6160746 0.08874965      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`Sphericity Corrections`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Effect       GGe        p[GG] p[GG]&lt;.05       HFe        p[HF]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           time 0.6532010 5.033982e-05         * 0.7054565 2.810626e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 time:treatment 0.7225823 1.254728e-05         * 0.8028383 4.815620e-06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   p[HF]&lt;.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aov</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> aov(formula = formula(aov_formula), data = data)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Grand Mean: 85.59722</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Stratum 1: id</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Terms:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                 Residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sum of Squares   4641.153</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deg. of Freedom        11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 20.54076</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Stratum 2: id:time</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Terms:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     time Residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sum of Squares  258.6944  103.9722</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deg. of Freedom        2        22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 2.173939</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 out of 4 effects not estimable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimated effects may be unbalanced</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Stratum 3: id:treatment</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Terms:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                 treatment Residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sum of Squares   316.6806  224.1528</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deg. of Freedom         1        11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 4.514147</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 out of 3 effects not estimable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimated effects are balanced</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Stratum 4: id:time:treatment</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Terms:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                 time:treatment Residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sum of Squares       266.36111  96.30556</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Deg. of Freedom              2        22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 2.092254</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimated effects may be unbalanced</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

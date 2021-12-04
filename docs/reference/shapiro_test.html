@@ -82,7 +82,7 @@ Thie function can be applied to single vectors or groups of vectors." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -173,16 +173,18 @@ values of they <code>by</code> variable, or for all values if there is no <code>
 variable, return the Shapiro-Wilk statistic, and the corresponding p-value.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>shapiro_test</span><span class='op'>(</span><span class='va'>faithful</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 2</span>
-#&gt;   statistic p_value
-#&gt;       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     0.981  0.019<span style='text-decoration: underline;'>0</span></div><div class='input'><span class='fu'>shapiro_test</span><span class='op'>(</span><span class='va'>faithful</span>, by <span class='op'>=</span> <span class='va'>face_sex</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 3</span>
-#&gt;   face_sex statistic p_value
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> female       0.972  0.068<span style='text-decoration: underline;'>8</span>
-#&gt; <span style='color: #BCBCBC;'>2</span> male         0.979  0.168 </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>shapiro_test</span><span class='op'>(</span><span class='va'>faithful</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   statistic p_value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     0.981  0.019<span style='text-decoration: underline;'>0</span></span>
+<span class='r-in'><span class='fu'>shapiro_test</span><span class='op'>(</span><span class='va'>faithful</span>, by <span class='op'>=</span> <span class='va'>face_sex</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   face_sex statistic p_value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> female       0.972  0.068<span style='text-decoration: underline;'>8</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> male         0.979  0.168 </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

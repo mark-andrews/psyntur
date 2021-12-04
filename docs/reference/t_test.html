@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psyntur</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -165,20 +165,21 @@ variables.</p></td>
     <p>A list with class "htest" as returned by <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>t_test</span><span class='op'>(</span><span class='va'>trustworthy</span> <span class='op'>~</span> <span class='va'>face_sex</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; 	Two Sample t-test
-#&gt; 
-#&gt; data:  trustworthy by face_sex
-#&gt; t = 1.9389, df = 168, p-value = 0.05419
-#&gt; alternative hypothesis: true difference in means between group female and group male is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  -0.004253649  0.471193782
-#&gt; sample estimates:
-#&gt; mean in group female   mean in group male 
-#&gt;             4.444061             4.210591 
-#&gt; </div><div class='input'>  
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>t_test</span><span class='op'>(</span><span class='va'>trustworthy</span> <span class='op'>~</span> <span class='va'>face_sex</span>, data <span class='op'>=</span> <span class='va'>faithfulfaces</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two Sample t-test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  trustworthy by face_sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> t = 1.9389, df = 168, p-value = 0.05419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: true difference in means between group female and group male is not equal to 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95 percent confidence interval:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  -0.004253649  0.471193782</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sample estimates:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mean in group female   mean in group male </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             4.444061             4.210591 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'>  </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
