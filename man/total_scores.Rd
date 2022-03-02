@@ -4,7 +4,7 @@
 \alias{total_scores}
 \title{Calculate the total scores from sets of scores}
 \usage{
-total_scores(.data, ..., .method = "mean", .append = FALSE)
+total_scores(.data, ..., .method = "mean", .append = FALSE, .drop = FALSE)
 }
 \arguments{
 \item{.data}{A data frame with columns to summed or averaged over.}
@@ -17,6 +17,8 @@ values. The "sum" is the sum, skipping missing values. The "sum_like" is
 the arithmetic mean, again skipping missing values, multiplied by the number of elements, including missing values.}
 
 \item{.append}{logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.}
+
+\item{.drop}{logical If .append is TRUE, and if .drop is TRUE, then the variables being aggregated over are not returned.}
 }
 \value{
 A new data frame with columns representing the total scores.
@@ -26,9 +28,13 @@ Calculate the total scores from sets of scores
 }
 \examples{
 # Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`
-total_scores(test_psychometrics, x = starts_with('x'), y = starts_with('y'))
+total_scores(test_psychometrics, x = starts_with('x_'), y = starts_with('y_'))
 # Calculate the sum of all items beginning with `z_` and separately all items beginning with `x_`
-total_scores(test_psychometrics, .method = 'sum', z = starts_with('z'), x = starts_with('x_'))
+total_scores(test_psychometrics, .method = 'sum', z = starts_with('z_'), x = starts_with('x_'))
 # Calculate the mean of all items from `x_1` to `y_10`
 total_scores(test_psychometrics, xy = x_1:y_10)
+# Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`,
+# but append these means to the original, after have dropping the variables that
+# are aggregated over
+total_scores(test_psychometrics, x = starts_with('x_'), y = starts_with('y_'), .append = T, .drop = T)
 }
