@@ -63,3 +63,46 @@ remove_double_header <- function(data_df){
   dplyr::slice(data_df, -1) |>
     dplyr::mutate(dplyr::across(dplyr::where(is.character), readr::parse_guess))
 }
+
+
+#' Rename selected columns as a sequence
+#'
+#' @description This function will rename a selection of columns as, for
+#' example, `var_1`, `var_2`, `var_2` ... `var_10`, where the prefix, `var` in
+#' this example, is arbitrary.
+#'
+#' @details If we had, for example, a data frame where columns were the names of
+#'   drugs and we wanted to rename these columns something like `drug_1`,
+#'   `drug_2`, ..., this would be easy to do with \link[dplyr]{rename} if there
+#'   were just a few columns to rename. When there are more than just a few,
+#'   individual renaming is somewhat tedious and error prone. We can use
+#'   \link[dplyr]{rename_with} to do this in one operation. However, the code
+#'   for doing so is not very simple and would require some proficiency in R and
+#'   `tidyverse`. This function is essentially just a wrapper to a `rename_with`
+#'   function to allow the renaming to be done in one simple command.
+#' 
+#' @param data_df A data frame
+#' @param col_selector A tidy selector, e.g. `contains('foo')`,
+#'   `ends_with('bar')`.
+#' @param prefix The prefix for the sequence, e.g. 'drug' to produce names like
+#'   `drug_1`, `drug_2` etc.
+#'
+#' @return A data frame with renamed columns
+#' @export
+#'
+#' @examples
+#' data_df <- readr::read_csv('
+#' subject, age, gender, Aripiprazole, Clozapine, Olanzapine, Quetiapine
+#' A, 27, F, 20, 10, 40, 25
+#' B, 23, M, 21, 21, 35, 27
+#' ')
+#'
+#' rename_with_seq(data_df, col_selector = Aripiprazole:Quetiapine, prefix = 'drug')
+rename_with_seq <- function(data_df, col_selector, prefix = 'var'){
+  selection_set <- rlang::enquo(col_selector)
+  # count the number of cols selected by the selector
+  k <- ncol(dplyr::select(data_df, !!selection_set))
+  dplyr::rename_with(data_df, 
+                     .fn = ~stringr::str_c(prefix, seq(k), sep = '_'), 
+                     .cols = !!selection_set)
+}

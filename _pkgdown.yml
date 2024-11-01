@@ -28,6 +28,7 @@ reference:
   desc: "Functions to help with general data wrangling"
   contents:
     - remove_double_header
+    - rename_with_seq
 - title: "Statistical analysis"
   desc: "Functions for statistical analysis."
 - contents:
