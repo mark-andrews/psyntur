@@ -15,12 +15,19 @@ reference:
   - describe
   - describe_across
   - sum_xna
+  - cor_test
+  - cor_test_multi
+  - pairs_plot
 - title: "Psychometric data analysis"
   desc: "Functions for use in psychometric data analysis"
   contents:
    - re_code
    - cronbach
    - total_scores
+- title: "Data wrangling"
+  desc: "Functions to help with general data wrangling"
+  contents:
+    - remove_double_header
 - title: "Statistical analysis"
   desc: "Functions for statistical analysis."
 - contents:
@@ -34,6 +41,7 @@ reference:
 - title: "Data sets"
   desc: "Included data sets."
 - contents:
+  - ansur
   - faithfulfaces
   - vizverb
   - schizophrenia
@@ -42,3 +50,4 @@ reference:
   - selfesteem
   - selfesteem2
   - selfesteem2_long
+  - test_psychometrics
