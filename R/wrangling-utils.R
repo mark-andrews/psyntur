@@ -61,5 +61,5 @@
 #'   remove_double_header()
 remove_double_header <- function(data_df){
   dplyr::slice(data_df, -1) |>
-    dplyr::mutate(dplyr::across(dplyr::everything(), readr::parse_guess))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), readr::parse_guess))
 }
