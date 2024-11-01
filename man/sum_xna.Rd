@@ -42,17 +42,17 @@ with \code{na.rm = TRUE}.
 }
 \section{Functions}{
 \itemize{
-\item \code{mean_xna}: The arithmetic mean for vectors with missing values.
+\item \code{mean_xna()}: The arithmetic mean for vectors with missing values.
 
-\item \code{median_xna}: The median for vectors with missing values.
+\item \code{median_xna()}: The median for vectors with missing values.
 
-\item \code{iqr_xna}: The interquartile range for vectors with missing values.
+\item \code{iqr_xna()}: The interquartile range for vectors with missing values.
 
-\item \code{sd_xna}: The standard deviation for vectors with missing values.
+\item \code{sd_xna()}: The standard deviation for vectors with missing values.
 
-\item \code{var_xna}: The variance for vectors with missing values.
+\item \code{var_xna()}: The variance for vectors with missing values.
+
 }}
-
 \examples{
 set.seed(10101)
 # Make a vector of random numbers

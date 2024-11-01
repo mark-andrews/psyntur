@@ -58,17 +58,22 @@ cronbach <- function(.data, ..., .ci = 0.95){
 #'   values. The "sum" is the sum, skipping missing values. The "sum_like" is
 #'   the arithmetic mean, again skipping missing values, multiplied by the number of elements, including missing values.
 #' @param .append logical If FALSE, just the totals be returned. If TRUE, the totals are appended as new columns to original data frame.
+#' @param .drop logical If .append is TRUE, and if .drop is TRUE, then the variables being aggregated over are not returned.
 #' @return A new data frame with columns representing the total scores.
 #' @export
 #'
 #' @examples
 #' # Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`
-#' total_scores(test_psychometrics, x = starts_with('x'), y = starts_with('y'))
+#' total_scores(test_psychometrics, x = starts_with('x_'), y = starts_with('y_'))
 #' # Calculate the sum of all items beginning with `z_` and separately all items beginning with `x_`
-#' total_scores(test_psychometrics, .method = 'sum', z = starts_with('z'), x = starts_with('x_'))
+#' total_scores(test_psychometrics, .method = 'sum', z = starts_with('z_'), x = starts_with('x_'))
 #' # Calculate the mean of all items from `x_1` to `y_10`
 #' total_scores(test_psychometrics, xy = x_1:y_10)
-total_scores <- function(.data, ..., .method = 'mean', .append = FALSE){
+#' # Calculate the mean of all items beginning with `x_` and separately all items beginning with `y_`,
+#' # but append these means to the original, after have dropping the variables that
+#' # are aggregated over
+#' total_scores(test_psychometrics, x = starts_with('x_'), y = starts_with('y_'), .append = T, .drop = T)
+total_scores <- function(.data, ..., .method = 'mean', .append = FALSE, .drop = FALSE){
   
   totalling_function <- function(.data_selection, .method){
     switch(.method,
@@ -91,7 +96,16 @@ total_scores <- function(.data, ..., .method = 'mean', .append = FALSE){
                                }
   )
   
+
+  
   if (.append) {
+    
+    if (.drop) {
+      .data <- purrr::reduce(.x = selection_sets,
+                             .init = .data,
+                             ~select(.x, -!!.y))
+    }
+    
     bind_cols(.data, results_df)
   } else {
     results_df

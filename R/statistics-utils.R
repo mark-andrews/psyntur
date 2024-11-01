@@ -37,8 +37,6 @@ shapiro_test <- function(y, by = NULL, data){
  
 }
 
-
-
 #' Test for Correlation Between Paired Samples
 #' 
 #' This function is a wrapper around [stats::cor.test()]. 
@@ -52,7 +50,7 @@ shapiro_test <- function(y, by = NULL, data){
 #' @param y A numeric variable.
 #' @param data A data frame containing the `y` and `x` variables
 #' @param method 	A character string indicating which correlation 
-#' coefficient is to be used: "pearson", "kendall", or "spearman". Default option is "pearson".
+#' coefficient is to be used: "pearson", "kendall", or "spearman". Default method is "pearson".
 #' @examples 
 #' cor_test(y = sex_dimorph, x = attractive, data = faithfulfaces)
 #' cor_test(y = sex_dimorph, x = attractive, method = "spearman", data = faithfulfaces)
@@ -72,6 +70,144 @@ cor_test <- function(x, y, method = "pearson", data){
   
   results
   
+}
+
+#' Test for Correlation Between Paired Samples for 2 or More Variables
+#' 
+#' This function is a wrapper around [stats::cor.test()]. 
+#' It implements the Pearson's correlation test that tests the null hypothesis 
+#' that two or more paired samples of values are unrelated.
+#' This function can be applied to two or more numeric variables in the provided data.
+#' 
+#' @return By default a matrix with correlation coefficients. Output format and included statistics 
+#' can be changed in the argument settings.
+
+#' @param .data A data frame.
+#' @param ... Variables for which the correlation coefficient should be returned. 
+#' If no variable name is provided, correlations will be returned for all numeric 
+#' variables in `.data`.
+#' @param .pvalues logical If FALSE (default), p-values will be omitted from the
+#' output. If TRUE, p-values will be included in the output.
+#' @param .ci logical If FALSE (default), 95% confidence interval bounds will be 
+#' omitted from the output. If TRUE, 95% confidence interval bounds will be 
+#' included in the output.
+#' @param .as_matrix logical If TRUE (default), results will be return as matrix. 
+#' If TRUE, results will be returned as tibble.
+#' @param .omit_redundancies logical If FALSE (default), all n^2 correlations 
+#' will be include in the output. If TRUE, only unique correlations will be 
+#' returned (x ~ y but not y ~ x) and correlation of a variable with itself will
+#' be omitted.
+#' @param .method 	A character string indicating which correlation coefficient 
+#' is to be used: "pearson", "kendall", or "spearman". Default method is "pearson".
+#' @examples 
+#' # Calculate the correlations between all numeric variables in the `faithfulfaces` data.
+#' cor_test_multi(faithfulfaces)
+#' # Calculate the correlations between the 1st, 2nd and 4th variable.
+#' cor_test_multi(faithfulfaces, c(1,2,4))
+#' # Calculate the correlations between `sex_dimorph`, `attractive`, and `trustworthy`.
+#' cor_test_multi(faithfulfaces, sex_dimorph, attractive, trustworthy)
+#' # Calculate all correlations and return p-values and 95% confidence intervals.
+#' cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE)
+#' # Calculate all correlations with p-values and 95% confidence intervals and 
+#' return results as table with only unique pairs of the off-diagonal correlations.
+#' cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE, .as_matrix = FALSE, 
+#' .omit_redundancies = TRUE)
+
+cor_test_multi <- function(.data,
+                           ...,
+                           .pvalues = FALSE,
+                           .ci = FALSE,
+                           .as_matrix = TRUE, 
+                           .omit_redundancies = FALSE,
+                           .method = "pearson"){
+  
+  if (!(.method %in% c("pearson", "kendall", "spearman"))) {
+    stop('The correlation method must be either "pearson", "kendall" or "spearman".')
+  }
+  
+  data <- dplyr::select(.data, ...)
+  
+  # If not variables are named, use all numeric values in data
+  if(ncol(data)==0) data <- dplyr::select(.data, where(is.numeric))
+  
+  nvars <- ncol(data)
+  varnames <- names(data)
+  
+  results_matrix <- matrix(nrow = nvars, 
+                           ncol = nvars, 
+                           dimnames = list(varnames, varnames))
+  
+  results <- list(results_matrix, results_matrix,
+                  results_matrix, results_matrix)
+  
+  names(results) <- c("cor", "p_value", "lower", "upper")
+  
+  cor_list <- purrr::map(varnames,
+                         ~purrr::map(varnames, 
+                                     ~stats::cor.test(x = pull(data, .x),
+                                                      y = pull(data, .y), 
+                                                      method = .method), 
+                                     .y=.x)) 
+  
+  for(i in seq(nvars)){
+    for(j in seq(nvars)){
+      results$cor[i,j] <- as.vector(cor_list[[i]][[j]]$estimate)
+      p_value <- cor_list[[i]][[j]]$p.value
+      ci <- cor_list[[i]][[j]]$conf.int
+      results$lower[i,j] <- ci[1]
+      results$upper[i,j] <- ci[2]
+      if(p_value == 0) p_value <- .Machine$double.xmin
+      results$p_value[i,j] <- p_value
+    }
+  }
+  
+  # Return results as table
+  if(!.as_matrix){
+    results <- results %>% 
+      as.data.frame() %>%
+      tibble::rownames_to_column() %>%
+      tidyr::pivot_longer(-rowname, names_to = c(".value", "name"),
+                          names_pattern = "(.*)\\.(.*)") %>%
+      dplyr::rename(x = rowname, y = name) %>%
+      dplyr::select(x, y, cor, lower, upper, p_value)
+    
+    if(.omit_redundancies){
+      results <- results %>%
+        dplyr::filter(x != y) %>%
+        dplyr::mutate(test1 = paste(x,y),
+                      test2 = paste(y,x)) %>%
+        tidyr::pivot_longer(test1:test2) %>%
+        dplyr::mutate(dup = duplicated(value)) %>%
+        dplyr::filter(!dup) %>%
+        dplyr::select(-value, -dup, -name) %>%
+        unique()
+    } 
+    
+    # Remove p-values and CIs if not required (default)
+    if(!.pvalues) results <- dplyr::select(results, -p_value)
+    if(!.ci) results <- dplyr::select(results, -lower, -upper)
+    
+  } else if(.as_matrix){
+    # Remove redundant pairs
+    if(.omit_redundancies){
+      for(i in 2:nvars){
+        results$cor[i,i:nvars] <- NA
+        results$p_value[i,i:nvars] <- NA
+        results$lower[i,i:nvars] <- NA
+        results$upper[i,i:nvars] <- NA
+      }
+      results$cor <- results$cor[-1,-nvars]
+      results$p_value <- results$p_value[-1,-nvars]
+      results$lower <- results$lower[-1,-nvars]
+      results$upper <- results$upper[-1,-nvars]
+    }    
+    # Remove p-values and CIs if not required
+    if(!.pvalues) results["p_value"] <- NULL
+    if(!.ci) results[c("lower", "upper")] <- NULL
+    
+  }
+  
+  return(results)
 }
 
 #' Independent samples t-test

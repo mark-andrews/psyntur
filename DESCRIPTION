@@ -3,7 +3,7 @@ Title: Helper Tools for Teaching Statistical Data Analysis
 Description: Provides functions and data-sets that are helpful 
   for teaching statistics and data analysis. It was originally designed for use
   when teaching students in the Psychology Department at Nottingham Trent University.
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Mark",
            family = "Andrews",
@@ -19,7 +19,7 @@ Maintainer: Mark Andrews <mark.andrews@ntu.ac.uk>
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Imports: 
     ggplot2 (>= 3.3.5),
     dplyr (>= 1.0.7),
@@ -39,6 +39,8 @@ Imports:
 Depends: 
     R (>= 2.10)
 Suggests: 
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Config/testthat/edition: 3
