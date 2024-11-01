@@ -99,6 +99,9 @@ cor_test <- function(x, y, method = "pearson", data){
 #' be omitted.
 #' @param .method 	A character string indicating which correlation coefficient 
 #' is to be used: "pearson", "kendall", or "spearman". Default method is "pearson".
+#' 
+#' @export
+#' 
 #' @examples 
 #' # Calculate the correlations between all numeric variables in the `faithfulfaces` data.
 #' cor_test_multi(faithfulfaces)
@@ -109,10 +112,9 @@ cor_test <- function(x, y, method = "pearson", data){
 #' # Calculate all correlations and return p-values and 95% confidence intervals.
 #' cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE)
 #' # Calculate all correlations with p-values and 95% confidence intervals and 
-#' return results as table with only unique pairs of the off-diagonal correlations.
+#' # return results as table with only unique pairs of the off-diagonal correlations.
 #' cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE, .as_matrix = FALSE, 
 #' .omit_redundancies = TRUE)
-
 cor_test_multi <- function(.data,
                            ...,
                            .pvalues = FALSE,

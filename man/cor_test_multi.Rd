@@ -59,7 +59,7 @@ cor_test_multi(faithfulfaces, sex_dimorph, attractive, trustworthy)
 # Calculate all correlations and return p-values and 95\% confidence intervals.
 cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE)
 # Calculate all correlations with p-values and 95\% confidence intervals and 
-return results as table with only unique pairs of the off-diagonal correlations.
+# return results as table with only unique pairs of the off-diagonal correlations.
 cor_test_multi(faithfulfaces, .pvalues = TRUE, .ci = TRUE, .as_matrix = FALSE, 
 .omit_redundancies = TRUE)
 }

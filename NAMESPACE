@@ -3,6 +3,7 @@
 export("%>%")
 export(cohen_d)
 export(cor_test)
+export(cor_test_multi)
 export(cronbach)
 export(densityplot)
 export(describe)
