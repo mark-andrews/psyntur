@@ -106,3 +106,47 @@ rename_with_seq <- function(data_df, col_selector, prefix = 'var'){
                      .fn = ~stringr::str_c(prefix, seq(k), sep = '_'), 
                      .cols = !!selection_set)
 }
+
+
+
+
+#' Drop rows if all values on selected columns are missing
+#'
+#' @description
+#' Remove a row if all values on selected columns, or by default, on all
+#' columns, are missing, i.e. have values of NA or NaN.
+#'
+#' @details
+#' The \link[tidyr]{drop_na} function will remove any row if it has any NA in selected columns.
+#' By default, it will remove the row there is any NA or NaN in any column.
+#' This `drop_if_all_na` function is similar but removes the row only if all values in the selected columns are NA or NaN.
+#' As with \link[tidyr]{drop_na}, by default it will use all columns.
+#' In other words, by default, `drop_if_all_na` removes any row if all values on that row are NA or NaN.
+#' 
+#' @param data A data frame
+#' @param ...  <[`tidy-select`][tidyr_tidy_select]> Columns to inspect for missing values. If empty, all columns are used.
+#'
+#' @return A data frame, possibly with some rows dropped.
+#' @export
+#' @examples
+#' data_df <- data.frame(x = c(1, 2, NA, NA), y = c(2, NA, 5, NA))
+#' 
+#' drop_if_all_na(data_df)
+#' drop_if_all_na(data_df, x)
+#' drop_if_all_na(data_df, y)
+#' drop_if_all_na(data_df, x, y)
+#' drop_if_all_na(data_df, x:y)
+#' drop_if_all_na(data_df, starts_with('x'), ends_with('y'))
+#' 
+drop_if_all_na <- function(data, ...) {
+  dots <- enquos(...)
+  not_na <- function(x) !is.na(x)
+  
+  if (rlang::is_empty(dots)) {
+    # Use all columns if no `...` are supplied
+    dplyr::filter(data, dplyr::if_any(.cols = everything(), not_na))
+  } else {
+    dplyr::filter(data, dplyr::if_any(.cols = c(!!!dots), not_na))
+  }
+  
+}

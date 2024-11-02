@@ -29,6 +29,7 @@ reference:
   contents:
     - remove_double_header
     - rename_with_seq
+    - drop_if_all_na
 - title: "Statistical analysis"
   desc: "Functions for statistical analysis."
 - contents:
