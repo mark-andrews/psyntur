@@ -1,8 +1,8 @@
-pandoc: 3.1.11.1
-pkgdown: 2.1.0
+pandoc: '3.5'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   exploration: exploration.html
   simplestats: simplestats.html
   visualization: visualization.html
-last_built: 2024-11-05T12:07Z
+last_built: 2024-11-09T17:04Z

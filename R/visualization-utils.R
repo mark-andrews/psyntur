@@ -364,20 +364,18 @@ densityplot <- function(x, data, by = NULL, position = 'stack', facet = NULL, fa
 #' pairs_plot(variables = c("sex_dimorph", "attractive"),
 #' by = face_sex,
 #' data = faithfulfaces)
-#' @import ggplot2 ggthemes GGally
 #' @export
-
 pairs_plot <- function(variables, data, by = NULL){
   
-  the_aes <- aes(alpha = .25)
+  the_aes <- ggplot2::aes(alpha = .25)
   
   # If we have a `by`, set that as the "colour" aesthetic
   if (!is.null(enexpr(by))) {
-    the_aes$colour <- enexpr(by)
-    the_aes$fill <- enexpr(by)
+    the_aes$colour <- dplyr::enexpr(by)
+    the_aes$fill <- dplyr::enexpr(by)
   }
   
-  ggpairs(data, columns = which(variables %in% names(data)), 
+  GGally::ggpairs(data, columns = which(variables %in% names(data)), 
           the_aes, 
           title = "",  
           axisLabels = "show", 
@@ -385,10 +383,10 @@ pairs_plot <- function(variables, data, by = NULL){
           upper = list(continuous = "points"),
           lower = "blank",
           diag = list(continuous = "densityDiag")) +
-    theme_few() + 
-    scale_colour_brewer(palette = "Set1") +
-    scale_fill_brewer(palette = "Set1") +
-    theme(axis.ticks = element_blank(),
+    ggthemes::theme_few() + 
+    ggplot2::scale_colour_brewer(palette = "Set1") +
+    ggplot2::scale_fill_brewer(palette = "Set1") +
+    ggplot2::theme(axis.ticks = element_blank(),
           legend.position = "top",
           legend.justification = "right",
           strip.text = element_text(hjust = 0))
@@ -440,9 +438,9 @@ scatterplot_matrix <- function(.data, ..., .by = NULL, .bins = 10){
       data = .data,
       mapping = the_aes,
       columns = col_indices,
-      lower = list(continuous = wrap(lowerFn)),
-      diag = list(continuous = wrap(diagFn)),
-      upper = list(continuous = wrap("cor", size = 5))
+      lower = list(continuous = GGally::wrap(lowerFn)),
+      diag = list(continuous = GGally::wrap(diagFn)),
+      upper = list(continuous = GGally::wrap("cor", size = 5))
     ) + ggplot2::theme_minimal()
   
 }
